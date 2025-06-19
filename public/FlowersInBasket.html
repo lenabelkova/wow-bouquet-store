@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ВАУ! БУКЕТ! - цветы по низким ценам с доставкой по всему Оренбургу.</title>
+    <link rel="icon" type="images/x-icon" href="images/ico.png">
+    <link rel="stylesheet" href="fonts/stylesheet.css">
+    <link rel="stylesheet" href="css/swiper-bundle.min.css">
+    <link rel="stylesheet" href="css/magnific-popup.css">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+    /* Мобильное меню - финальная версия */
+    @media (max-width: 992px) {
+        .header-bottom {
+            display: none;
+        }
+        
+        .mobile-header {
+            display: flex;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: #fff;
+            z-index: 100;
+            padding: 15px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Добавьте стили для мобильных иконок */
+        .mobile-actions-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .mobile-actions-header .cart,
+        .mobile-actions-header .account {
+            display: flex;
+        }
+
+        /* Добавляем отступ для контента, чтобы он не скрывался под шапкой */
+        body {
+            padding-top: 70px;
+        }
+
+        .s-banner {
+            margin-top: -20px; /* Компенсируем отступ для первого блока */
+        }
+    }
+
+    @media (min-width: 993px) {
+        .mobile-header,
+        .mobile-menu,
+        .menu-overlay {
+            display: none !important;
+        }
+        
+        /* Показываем иконки в обычном хедере */
+        .header-actions {
+            display: flex;
+        }
+        
+        /* Скрываем мобильные иконки на десктопе */
+        .mobile-actions-header {
+            display: none !important;
+        }
+
+        /* Убираем отступ для десктопной версии */
+        body {
+            padding-top: 0;
+        }
+    }
+    
+    .mobile-header {
+        display: none;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        background: #fff;
+        z-index: 100;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+    
+    /* Остальные стили остаются без изменений */
+    .mobile-header-inner {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+    
+    .burger-btn {
+        width: 24px;
+        height: 18px;
+        position: relative;
+        background: none;
+        border: none;
+        padding: 0;
+        cursor: pointer;
+    }
+    
+    .burger-btn span {
+        display: block;
+        width: 100%;
+        height: 2px;
+        background-color: #333;
+        position: absolute;
+        left: 0;
+        transition: all 0.3s ease;
+    }
+    
+    .burger-btn span:nth-child(1) {
+        top: 0;
+    }
+    
+    .burger-btn span:nth-child(2) {
+        top: 50%;
+        transform: translateY(-50%);
+    }
+    
+    .burger-btn span:nth-child(3) {
+        bottom: 0;
+    }
+    
+    .mobile-logo {
+        margin-right: auto;
+    }
+    
+    .mobile-actions-header {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+    
+    .mobile-menu {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 100%;
+        max-width: 320px;
+        height: 100%;
+        background: #fff;
+        z-index: 1000;
+        transition: right 0.3s ease;
+        box-sizing: border-box;
+        box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .mobile-menu.active {
+        right: 0;
+    }
+    
+    .mobile-menu-header {
+        padding: 15px 20px;
+        display: flex;
+        justify-content: flex-end;
+    }
+    
+    .close-menu {
+        background: none;
+        border: none;
+        font-size: 24px;
+        cursor: pointer;
+        padding: 5px;
+    }
+    
+    .mobile-menu-content {
+        padding: 0 20px 20px;
+        flex-grow: 1;
+        overflow-y: auto;
+    }
+    
+    .mobile-nav ul {
+        list-style: none;
+        padding: 0;
+        margin: 0 0 20px 0;
+    }
+    
+    .mobile-nav li {
+        margin-bottom: 15px;
+    }
+    
+    .mobile-nav a {
+        color: #333;
+        text-decoration: none;
+        font-size: 18px;
+        font-weight: 500;
+        display: block;
+        padding: 10px 0;
+        transition: color 0.2s;
+    }
+    
+    .mobile-nav a:hover {
+        color: #e91e63;
+    }
+    
+    .mobile-actions {
+        display: flex;
+        gap: 15px;
+        padding: 15px 0;
+        border-top: 1px solid #eee;
+        margin-top: auto;
+    }
+    
+    .mobile-search {
+        margin: 20px 0;
+    }
+    
+    .mobile-search input {
+        width: 100%;
+        padding: 10px 15px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-size: 16px;
+    }
+    
+    .menu-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 999;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+    }
+    
+    .menu-overlay.active {
+        opacity: 1;
+        visibility: visible;
+    }
+    
+    .no-scroll {
+        overflow: hidden;
+    }
+    
+    /* Стили для корзины (одинаковые для мобильной и ПК версии) */
+    .popup {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1001;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+    }
+    
+    .popup.active {
+        opacity: 1;
+        visibility: visible;
+    }
+    
+    .popup__container {
+        background-color: #fff;
+        border-radius: 10px;
+        padding: 30px;
+        max-width: 600px;
+        width: 90%;
+        max-height: 80vh;
+        overflow-y: auto;
+        position: relative;
+    }
+    
+    .popup__close {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        font-size: 24px;
+        background: none;
+        border: none;
+        cursor: pointer;
+    }
+    
+    .popup__title {
+        font-size: 24px;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+    
+    .popup__product-list {
+        margin-bottom: 20px;
+    }
+    
+    .popup__product-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 0;
+        border-bottom: 1px solid #eee;
+    }
+    
+    .popup__product-info {
+        display: flex;
+        align-items: center;
+    }
+    
+    .popup__product-image {
+        width: 60px;
+        height: 60px;
+        object-fit: cover;
+        margin-right: 15px;
+    }
+    
+    .popup__product-name {
+        font-weight: 500;
+    }
+    
+    .popup__product-price {
+        font-weight: 600;
+    }
+    
+    .popup__cost {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 10px;
+    }
+    
+    .popup__cost-title {
+        font-weight: 500;
+    }
+    
+    .popup__cost-value {
+        font-weight: 600;
+    }
+    
+    .bouquet-composition {
+        margin-top: 20px;
+        padding-top: 20px;
+        border-top: 1px solid #eee;
+    }
+    
+    .bouquet-composition h3 {
+        margin-bottom: 10px;
+    }
+    
+    .bouquet-composition ul {
+        list-style: none;
+        padding: 0;
+    }
+    
+    .bouquet-composition li {
+        margin-bottom: 5px;
+    }
+    
+    @media (max-width: 992px) {
+        .header-bottom {
+            display: none;
+        }
+        
+        .mobile-header {
+            display: flex;
+        }
+        
+        /* Скрываем иконки в обычном хедере */
+        .header-actions {
+            display: none;
+        }
+    }
+    
+    @media (min-width: 993px) {
+        .mobile-header,
+        .mobile-menu,
+        .menu-overlay {
+            display: none !important;
+        }
+        
+        /* Показываем иконки в обычном хедере */
+        .header-actions {
+            display: flex;
+        }
+    }
+    
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <!-- Мобильная шапка -->
+            <div class="mobile-header">
+                <a href="index.html" class="mobile-logo">
+                    <img src="images/logo-header.svg" alt="ВАУ! БУКЕТ!" width="120">
+                </a>
+                
+                <div class="mobile-header-inner">
+                    <!-- Переносим иконки из header-actions -->
+                    <div class="mobile-actions-header">  
+                        <a href="login.html" class="account" id="mobile-account-link">
+                            <img src="images/account.svg" alt="ВАУ! БУКЕТ!" id="mobile-account-icon">
+                        </a>
+                        <button class="cart" id="mobile-cart">
+                            <img class="cart__image" src="./images/car.svg" alt="Cart">
+                           <div class="cart__num" id="mobile-cart_num">0</div>
+                        </button>
+                    </div>
+                    
+                    <button class="burger-btn" id="burgerBtn">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Оригинальный хедер для ПК -->
+            <div class="header-bottom">
+                <div class="container">
+                    <div class="header-bottom-row">
+                        <a href="index.html" class="header-logo">
+                            <img src="images/logo-header.svg" alt="ВАУ! БУКЕТ!">
+                        </a>
+                        <nav class="menu-nav">
+                            <ul>
+                                <li><a href="index.html#a">О нас</a></li>
+                                <li><a href="index.html#b">Каталог</a></li>
+                                <li><a href="blog.html">Блог</a></li>
+                                <li><a href="contacts.html">Контакты</a></li>
+                                <li><a href="index.html#c">Отзывы</a></li>
+                            </ul>
+                        </nav>
+                        <div class="header-actions">  
+                            <a href="login.html" class="account" id="account-link">
+                                <img src="images/account.svg" alt="ВАУ! БУКЕТ!" id="account-icon">
+                            </a>
+                            <button class="cart" id="cart">
+                                <img class="cart__image" src="./images/car.svg" alt="Cart">
+                               <div class="cart__num" id="cart_num">0</div>  <!-- В десктопной версии -->
+                            </button>
+                        </div>
+
+                        <div class="search-container">
+                            <input type="text" id="search-input" placeholder="Поиск товаров...">
+                            <button id="search-button">
+                                <img src="images/lupa.png" alt="Поиск">
+                            </button>
+                            <div id="suggestions"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Мобильное меню -->
+        <div class="mobile-menu" id="mobileMenu">
+            <div class="mobile-menu-header">
+                <button class="close-menu" id="closeMenu">×</button>
+            </div>
+            
+            <div class="mobile-menu-content">
+                <nav class="mobile-nav">
+                    <ul>
+                        <li><a href="index.html#a">О нас</a></li>
+                                <li><a href="index.html#b">Каталог</a></li>
+                                <li><a href="blog.html">Блог</a></li>
+                                <li><a href="contacts.html">Контакты</a></li>
+                                <li><a href="index.html#c">Отзывы</a></li>
+                    </ul>
+                
+               
+            </div>
+        </div>
+        </nav>
+        <!-- Затемнение фона -->
+        <div class="menu-overlay" id="menuOverlay"></div>
+    </header>
+           
+
+    <section class="s-newss">
+      <div class="container">
+          <div class="def-title-wrapper">
+              <!-- Выпадающий список для сортировки по цене -->
+              <div class="sort-controls">
+                  <label for="sort-by-price">Цена:</label>
+                  <select id="sort-by-price">
+                      <option value="price-asc">По возрастанию</option>
+                      <option value="price-desc">По убыванию</option>
+                  </select>
+              </div>
+              <!-- Выпадающий список для сортировки по цвету -->
+              <div class="sort-controls">
+                  <label for="sort-by-color">Цветы в составе:</label>
+                  <select id="sort-by-color">
+                      <option value="all">Все</option>
+                      <option value="хризантемы">Хризантема</option>
+                      <option value="розы">Розы</option>
+                  </select>
+              </div>
+          </div>
+<section class="s-newss catalog-section">
+        <div class="cards">
+    <div class="card" data-price="5400" data-color="розы">
+        <div class="card__top">
+            <a href="#" class="card__image">
+                <img src="images/cor-1.jpg" />
+            </a>
+            <div class="card__label">-10%</div>
+        </div>
+        <div class="card__bottom">
+            <div class="card__prices">
+                <div class="card__price card__price--discount"><span>5400</span></div>
+                <div class="card__price card__price--common"><span>6000</span></div>
+            </div>
+            <a href="#" class="card__title">
+                Букет "Любовь"<br></br>
+            </a>
+            <button class="card__add">В корзину</button>
+        </div>
+    </div>
+
+    <div class="card" data-price="6750" data-color="розы">
+        <div class="card__top">
+            <a href="#" class="card__image">
+                        <img src="images/cor-2.jpg" />
+            </a>
+            <div class="card__label">-10%</div>
+        </div>
+        <div class="card__bottom">
+            <div class="card__prices">
+                <div class="card__price card__price--discount"><span>6750</span></div>
+                <div class="card__price card__price--common"><span>7500</span></div>
+            </div>
+            <a href="#" class="card__title">
+                Букет "Илюзия"<br></br>
+            </a>
+            <button class="card__add">В корзину</button>
+        </div>
+    </div>
+
+    <div class="card" data-price="5850" data-color="розы">
+        <div class="card__top">
+            <a href="#" class="card__image">
+                    <img src="images/cor-3.jpg" />
+            </a>
+            <div class="card__label">-10%</div>
+        </div>
+        <div class="card__bottom">
+            <div class="card__prices">
+                <div class="card__price card__price--discount"><span>5850</span></div>
+                <div class="card__price card__price--common"><span>6500</span></div>
+            </div>
+            <a href="#" class="card__title">
+                Букет "Свидание"<br></br>
+            </a>
+            <button class="card__add">В корзину</button>
+        </div>
+    </div>
+
+    <div class="card" data-price="6120" data-color="хризантемы">
+        <div class="card__top">
+            <a href="#" class="card__image">
+                    <img src="images/cor-4.jpg" />
+            </a>
+            <div class="card__label">-10%</div>
+        </div>
+        <div class="card__bottom">
+            <div class="card__prices">
+                <div class="card__price card__price--discount"><span>6120</span></div>
+                <div class="card__price card__price--common"><span>6800</span></div>
+            </div>
+            <a href="#" class="card__title">
+                Букет "Вера"<br></br>
+            </a>
+            <button class="card__add">В корзину</button>
+        </div>
+    </div>
+
+    <div class="card" data-price="6750" data-color="розы">
+        <div class="card__top">
+            <a href="#" class="card__image">
+                         <img src="images/cor-5.jpg" />
+            </a>
+            <div class="card__label">-10%</div>
+        </div>
+        <div class="card__bottom">
+            <div class="card__prices">
+                <div class="card__price card__price--discount"><span>6750</span></div>
+                <div class="card__price card__price--common"><span>7500</span></div>
+            </div>
+            <a href="#" class="card__title">
+                Букет "Юг"<br></br>
+            </a>
+            <button class="card__add">В корзину</button>
+        </div>
+    </div>
+
+    <div class="card" data-price="5850" data-color="розы">
+        <div class="card__top">
+            <a href="#" class="card__image">
+                      <img src="images/cor-6.jpg" />
+            </a>
+            <div class="card__label">-10%</div>
+        </div>
+        <div class="card__bottom">
+            <div class="card__prices">
+                <div class="card__price card__price--discount"><span>5850</span></div>
+                <div class="card__price card__price--common"><span>6500</span></div>
+            </div>
+            <a href="#" class="card__title">
+                Букет "Нежность"<br></br>
+            </a>
+            <button class="card__add">В корзину</button>
+        </div>
+    </div>
+
+    <div class="card" data-price="4950" data-color="хризантемы">
+        <div class="card__top">
+            <a href="#" class="card__image">
+                     <img src="images/cor-7.jpg" />
+            </a>
+            <div class="card__label">-10%</div>
+        </div>
+        <div class="card__bottom">
+            <div class="card__prices">
+                <div class="card__price card__price--discount"><span>4950</span></div>
+                <div class="card__price card__price--common"><span>5500</span></div>
+            </div>
+            <a href="#" class="card__title">
+                Букет "Романтика"<br>
+            </a>
+            <button class="card__add">В корзину</button>
+        </div>
+    </div>
+
+    <div class="card" data-price="7650" data-color="хризантемы">
+        <div class="card__top">
+            <a href="#" class="card__image">
+                      <img src="images/cor-8.jpg" />
+            </a>
+            <div class="card__label">-10%</div>
+        </div>
+        <div class="card__bottom">
+            <div class="card__prices">
+                <div class="card__price card__price--discount"><span>7650</span></div>
+                <div class="card__price card__price--common"><span>8500</span></div>
+            </div>
+            <a href="#" class="card__title">
+                Букет "Роман"<br></br>
+            </a>
+            <button class="card__add">В корзину</button>
+        </div>
+    </div>
+ </div> </div>
+    </section>  
+   <footer class="site-footer">
+		<div class="container">
+			<div class="footer-row">
+				<div class="footer-left">
+					<a href="index.html" class="footer-logo">
+						<img src="images/logo-footer.svg" alt="Вау букет">
+					</a>
+					<div class="footer-info">
+						<div class="footer-info-item">
+							<span class="footer-info-icon">
+								<img src="images/location-footer.svg" alt="Локация">
+							</span>
+							<span>Г. Оренбург, Салмышская 67/1</span>
+						</div>
+
+						<div class="footer-info-item">
+							<span class="footer-info-icon">
+								<img src="images/phone-footer.svg" alt="Телефон">
+							</span>
+							<span>+7 (901) 891-41-23</span>
+						</div>
+
+						<div class="footer-info-item">
+							<span class="footer-info-icon">
+								<img src="images/email-footer.svg" alt="Email">
+							</span>
+							<span> info@wow-buket.ru</span>
+						</div>
+						
+					</div>
+
+					<div class="footer-social">
+						<a href="https://t.me/wow_bouquet_oren">
+							<img src="images/wk.svg" alt="Телеграмм">
+						</a>
+						<a href="https://api.whatsapp.com/send/?phone=79018914123&text&type=phone_number&app_absent=0">
+							<img src="images/wh.svg" alt="Вотсап">
+						</a>
+						<a href="https://vk.com/wow_bouquet_oren">
+							<img src="images/vk1.svg" alt="Вконтакте">
+						</a>
+					</div>
+				</div>
+
+				<div class="footer-right">
+
+					<div class="footer-menu">
+						<div class="footer-title">Каталог</div>
+						<ul>
+					<li><a href="Monobouquets.html">Монобукеты</a></li>
+					<li><a href="AuthorBouquets.html">Авторские букеты</a></li>
+					<li><a href="DriedFlowerBouquets.html">Букеты из сухоцветов</a></li>
+					<li><a href="FieldBouquets.html">Букеты полевые</a></li>
+					<li><a href="FlowersInBox.html">Цветы в коробке</a></li>
+					<li><a href="FlowersInBasket.html">Цветы в корзине</a></li>
+					<li><a href="SingleFlowers.html">Цветы по штучно</a></li>
+					<li><a href="BridalBouquets.html">Букеты невесты</a></li>
+
+						</ul>
+					</div>
+
+					<div class="footer-menu">
+						<div class="footer-title">Блог</div>
+						<ul>
+							<li><a href="blog-single.html">Мастер-класс по составлению букетов</a></li>
+							<li><a href="blog-single2.html">Конкурс на лучшее фото с цветами</a></li>
+							<li><a href="blog-single3.html">Секреты ухода за комнатными растениями</a></li>
+							<li><a href="blog-single4.html">Символика цветов: что означают разные виды</a></li>
+						</ul>
+					</div>
+
+					<div class="footer-menu">
+						<div class="footer-title">Часы работы</div>
+						<ul>
+							<li>Пн: 9:00 - 21:00</li>
+							<li>Вт: 9:00 - 21:00</li>
+							<li>Ср: 9:00 - 21:00</li>
+							<li>Чт: 9:00 - 21:00</li>
+							<li>Пт: 9:00 - 21:00</li>
+							<li>Сб: 9:00 - 20:00</li>
+							<li>Вс: 9:00 - 20:00</li>
+						</ul>
+					</div>
+
+				</div>
+			</div>
+		</div>
+
+		<div class="footer-copyright">
+			<div class="container">
+				<div>
+					2025 © ВАУ БУКЕТ! Все права защищены
+				</div>
+			</div>
+		</div>
+		
+	</footer>
+	
+
+      <div class="popup" id="cartPopup">
+    <div class="popup__container" id="popup_container">
+        <div class="popup__item">
+            <h1 class="popup__title">Ваша корзина</h1>
+        </div>
+
+        <div class="popup__item" id="popup_product_list">
+            <!-- Товары будут добавляться сюда -->
+        </div>
+
+        <div class="popup__item">
+            <div class="popup__cost">
+                <h2 class="popup__cost-title">Итого</h2>
+                <output class="popup__cost-value" id="popup_cost">0 руб</output>
+            </div>
+
+            <div class="popup__cost">
+                <h2 class="popup__cost-title">Скидка</h2>
+                <output class="popup__cost-value" id="popup_discount">0 руб</output>
+            </div>
+
+            <div class="popup__cost">
+                <h2 class="popup__cost-title">Итого со скидкой</h2>
+                <output class="popup__cost-value" id="popup_cost_discount">0 руб</output>
+            </div>
+
+            <div id="bouquet_composition" class="bouquet-composition">
+                <!-- Состав букета будет добавляться сюда -->
+            </div>
+
+     
+        </div>
+
+        <button class="popup__close" id="popup_close">&#10006;</button>
+    </div>
+</div>
+    <script src="ф.js"></script>
+    <script src="./scripts/main.js"></script>
+  </body>
+</html>
+
+

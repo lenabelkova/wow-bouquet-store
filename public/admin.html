@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Админ-панель | Цветочный магазин</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #ff6b9d;
+            --secondary: #4CAF50;
+            --danger: #f44336;
+            --warning: #ff9800;
+            --info: #2196F3;
+            --dark: #343a40;
+            --light: #f8f9fa;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+        }
+        
+        .admin-container {
+            display: flex;
+            min-height: 100vh;
+        }
+        
+        /* Сайдбар */
+        .sidebar {
+            width: 250px;
+            background-color: var(--dark);
+            color: white;
+            padding: 20px 0;
+            transition: all 0.3s;
+        }
+        
+        .sidebar-header {
+            padding: 0 20px 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .sidebar-header h3 {
+            color: var(--primary);
+            font-weight: 600;
+        }
+        
+        .sidebar-menu {
+            padding: 20px 0;
+        }
+        
+        .sidebar-menu ul {
+            list-style: none;
+        }
+        
+        .sidebar-menu li a {
+            display: flex;
+            align-items: center;
+            padding: 12px 20px;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        
+        .sidebar-menu li a:hover,
+        .sidebar-menu li a.active {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+        
+        .sidebar-menu li a i {
+            margin-right: 10px;
+            width: 20px;
+            text-align: center;
+        }
+        
+        /* Основной контент */
+        .main-content {
+            flex: 1;
+            padding: 20px;
+        }
+        
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .header h1 {
+            color: var(--dark);
+        }
+        
+        .user-info {
+            display: flex;
+            align-items: center;
+        }
+        
+        .user-info img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+        
+        /* Карточки статистики */
+        .stats-cards {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .stats-card {
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .stats-card h3 {
+            font-size: 14px;
+            color: #6c757d;
+            margin-bottom: 10px;
+        }
+        
+        .stats-card .value {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .stats-card .change {
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .stats-card .change i {
+            margin-right: 5px;
+        }
+        
+        .stats-card .change.up {
+            color: var(--secondary);
+        }
+        
+        .stats-card .change.down {
+            color: var(--danger);
+        }
+        
+        /* Таблица заказов */
+        .orders-table {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+        
+        .table-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .table-header h3 {
+            font-size: 18px;
+            color: var(--dark);
+            margin-bottom: 10px;
+        }
+        
+        .status-filters {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .status-filters a {
+            color: #6c757d;
+            text-decoration: none;
+            font-size: 14px;
+            padding: 5px 10px;
+            border-radius: 4px;
+            transition: all 0.2s;
+        }
+        
+        .status-filters a:hover {
+            background-color: #f0f0f0;
+        }
+        
+        .status-filters a.active {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .table-actions {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        
+        .btn {
+            padding: 8px 15px;
+            border-radius: 4px;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: all 0.2s;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: #e05d8b;
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            border: 1px solid #ddd;
+        }
+        
+        .btn-outline:hover {
+            background-color: #f0f0f0;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+        
+        th {
+            background-color: #f8f9fa;
+            font-weight: 600;
+            color: #495057;
+        }
+        
+        tr:hover {
+            background-color: #f8f9fa;
+        }
+        
+        .status {
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+            display: inline-block;
+        }
+        
+        .status-new {
+            background-color: #e3f2fd;
+            color: var(--info);
+        }
+        
+        .status-processing {
+            background-color: #fff8e1;
+            color: var(--warning);
+        }
+        
+        .status-completed {
+            background-color: #e8f5e9;
+            color: var(--secondary);
+        }
+        
+        .status-cancelled {
+            background-color: #ffebee;
+            color: var(--danger);
+        }
+        
+        .action-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #6c757d;
+            font-size: 14px;
+            margin: 0 5px;
+            transition: color 0.2s;
+        }
+        
+        .action-btn:hover {
+            color: var(--primary);
+        }
+        
+        /* Модальное окно */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            background-color: white;
+            border-radius: 8px;
+            width: 500px;
+            max-width: 90%;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .modal-header {
+            padding: 15px 20px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .modal-body {
+            padding: 20px;
+        }
+        
+        .modal-footer {
+            padding: 15px 20px;
+            border-top: 1px solid #eee;
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        
+        textarea.form-control {
+            min-height: 100px;
+            resize: vertical;
+        }
+        
+        /* Адаптивность */
+        @media (max-width: 1200px) {
+            .stats-cards {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 70px;
+                overflow: hidden;
+            }
+            
+            .sidebar-header h3,
+            .sidebar-menu li a span {
+                display: none;
+            }
+            
+            .sidebar-menu li a {
+                justify-content: center;
+            }
+            
+            .sidebar-menu li a i {
+                margin-right: 0;
+                font-size: 20px;
+            }
+            
+            .stats-cards {
+                grid-template-columns: 1fr;
+            }
+            
+            .table-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+            
+            .table-actions {
+                width: 100%;
+                justify-content: flex-end;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-container">
+        <!-- Сайдбар -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+             
+            </div>
+            <div class="sidebar-menu">
+                <ul>
+                    <li><a href="#" class="active" id="orders-tab"><i class="fas fa-shopping-cart"></i> <span>Заказы</span></a></li>
+                    <li><a href="#" id="logout-btn"><i class="fas fa-sign-out-alt"></i> <span>Выйти</span></a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- Основной контент -->
+        <div class="main-content">
+            <div class="header">
+                <h1>Панель администратора</h1>
+                <div class="user-info">
+                   
+                </div>
+            </div>
+            
+            <!-- Секция заказов -->
+            <div id="orders-section">
+                <!-- Карточки статистики -->
+                <div class="stats-cards">
+                    <div class="stats-card">
+                        <h3>Всего заказов</h3>
+                        <div class="value" id="total-orders">0</div>
+                        <div class="change up">
+                            <i class="fas fa-arrow-up"></i> <span id="orders-change">0%</span> за месяц
+                        </div>
+                    </div>
+                    <div class="stats-card">
+                        <h3>На сумму</h3>
+                        <div class="value" id="total-revenue">0 ₽</div>
+                        <div class="change up">
+                            <i class="fas fa-arrow-up"></i> <span id="revenue-change">0%</span> за месяц
+                        </div>
+                    </div>
+                    <div class="stats-card">
+                        <h3>Новые заказы</h3>
+                        <div class="value" id="new-orders">0</div>
+                        <div class="change down">
+                            <i class="fas fa-arrow-down"></i> <span id="new-orders-change">0%</span> за неделю
+                        </div>
+                    </div>
+                    <div class="stats-card">
+                        <h3>Средний чек</h3>
+                        <div class="value" id="avg-order-value">0 ₽</div>
+                        <div class="change up">
+                            <i class="fas fa-arrow-up"></i> <span id="avg-change">0%</span> за месяц
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Таблица заказов -->
+                <div class="orders-table">
+                    <div class="table-header">
+                        <div>
+                            <h3>Заказы</h3>
+                            <div class="status-filters">
+                                <a href="#" class="status-filter active" data-status="all">Все</a>
+                                <a href="#" class="status-filter" data-status="new">Новые</a>
+                                <a href="#" class="status-filter" data-status="processing">В обработке</a>
+                                <a href="#" class="status-filter" data-status="completed">Завершенные</a>
+                                <a href="#" class="status-filter" data-status="cancelled">Отмененные</a>
+                            </div>
+                        </div>
+                        <div class="table-actions">
+                            <input type="text" id="search-orders" placeholder="Поиск по номеру или клиенту" class="form-control" style="width: 250px;">
+                            <button class="btn btn-primary" id="export-word">
+                                <i class="fas fa-file-word"></i> Word
+                            </button>
+                        </div>
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>№ заказа</th>
+                                <th>Клиент</th>
+                                <th>Дата</th>
+                                <th>Состав</th>
+                                <th>Сумма</th>
+                                <th>Статус</th>
+                                <th>Действия</th>
+                            </tr>
+                        </thead>
+                        <tbody id="orders-table-body">
+                            <!-- Данные будут загружены через JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Модальное окно изменения статуса -->
+    <div class="modal" id="statusModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Изменение статуса заказа #<span id="modal-order-id"></span></h3>
+                <button class="action-btn" onclick="closeModal()"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="order-status">Статус</label>
+                    <select id="order-status" class="form-control">
+                        <option value="new">Новый</option>
+                        <option value="processing">В обработке</option>
+                        <option value="completed">Завершен</option>
+                        <option value="cancelled">Отменен</option>
+                    </select>
+                </div>
+                <div class="form-group" id="cancel-reason-group" style="display: none;">
+                    <label for="cancel-reason">Причина отмены</label>
+                    <textarea id="cancel-reason" class="form-control" placeholder="Укажите причину отмены заказа..."></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" onclick="closeModal()">Отмена</button>
+                <button class="btn btn-primary" id="save-status" onclick="saveStatus()">Сохранить</button>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Текущая страница и фильтры
+        let currentStatus = 'all';
+        let allOrders = [];
+        
+        // Загрузка данных при открытии страницы
+        document.addEventListener('DOMContentLoaded', async () => {
+            // Проверка авторизации администратора
+            try {
+                const response = await fetch('/api/user');
+                const userData = await response.json();
+                
+                if (!response.ok || !userData.success || !userData.isAdmin) {
+                    window.location.href = '/login.html';
+                    return;
+                }
+                
+                // Загрузка данных
+                await loadStats();
+                await loadOrders();
+                
+                // Настройка обработчиков событий
+                setupEventListeners();
+                
+            } catch (error) {
+                console.error('Ошибка:', error);
+                window.location.href = '/login.html';
+            }
+        });
+        
+        // Настройка обработчиков событий
+        function setupEventListeners() {
+            // Фильтр по статусу
+            document.querySelectorAll('.status-filter').forEach(filter => {
+                filter.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    currentStatus = this.dataset.status;
+                    
+                    document.querySelectorAll('.status-filter').forEach(f => {
+                        f.classList.remove('active');
+                    });
+                    this.classList.add('active');
+                    
+                    loadOrders();
+                });
+            });
+            
+            // Поиск заказов
+            document.getElementById('search-orders').addEventListener('input', debounce(() => {
+                loadOrders();
+            }, 300));
+            
+            // Экспорт в Word
+            document.getElementById('export-word').addEventListener('click', exportToWord);
+            
+            // Выход из системы
+            document.getElementById('logout-btn').addEventListener('click', async function(e) {
+                e.preventDefault();
+                try {
+                    const response = await fetch('/api/auth/logout', {
+                        method: 'POST'
+                    });
+                    
+                    if (response.ok) {
+                        window.location.href = '/login.html';
+                    } else {
+                        throw new Error('Ошибка выхода из системы');
+                    }
+                } catch (error) {
+                    console.error('Ошибка:', error);
+                    alert('Произошла ошибка при выходе из системы');
+                }
+            });
+        }
+        
+        // Загрузка статистики
+        async function loadStats() {
+            try {
+                const response = await fetch('/api/admin/stats');
+                const data = await response.json();
+                
+                if (data.success) {
+                    document.getElementById('total-orders').textContent = data.stats.totalOrders;
+                    document.getElementById('new-orders').textContent = data.stats.newOrders;
+                    document.getElementById('total-revenue').textContent = formatPrice(data.stats.totalRevenue) + ' ₽';
+                    document.getElementById('avg-order-value').textContent = formatPrice(data.stats.avgOrderValue) + ' ₽';
+                    
+                    // Обновляем процентные изменения
+                    if (data.stats.ordersChange) {
+                        document.getElementById('orders-change').textContent = data.stats.ordersChange + '%';
+                        document.querySelector('#total-orders + .change').className = data.stats.ordersChange >= 0 ? 'change up' : 'change down';
+                    }
+                    
+                    if (data.stats.revenueChange) {
+                        document.getElementById('revenue-change').textContent = data.stats.revenueChange + '%';
+                        document.querySelector('#total-revenue + .change').className = data.stats.revenueChange >= 0 ? 'change up' : 'change down';
+                    }
+                    
+                    if (data.stats.newOrdersChange) {
+                        document.getElementById('new-orders-change').textContent = data.stats.newOrdersChange + '%';
+                        document.querySelector('#new-orders + .change').className = data.stats.newOrdersChange >= 0 ? 'change up' : 'change down';
+                    }
+                    
+                    if (data.stats.avgChange) {
+                        document.getElementById('avg-change').textContent = data.stats.avgChange + '%';
+                        document.querySelector('#avg-order-value + .change').className = data.stats.avgChange >= 0 ? 'change up' : 'change down';
+                    }
+                }
+            } catch (error) {
+                console.error('Ошибка загрузки статистики:', error);
+            }
+        }
+        
+        // Загрузка заказов
+        async function loadOrders() {
+            try {
+                const searchQuery = document.getElementById('search-orders').value;
+                let url = `/api/admin/orders?status=${currentStatus}`;
+                
+                if (searchQuery) {
+                    url += `&search=${encodeURIComponent(searchQuery)}`;
+                }
+                
+                const response = await fetch(url);
+                const data = await response.json();
+                
+                if (data.success) {
+                    allOrders = data.orders;
+                    renderOrders(data.orders);
+                }
+            } catch (error) {
+                console.error('Ошибка загрузки заказов:', error);
+                document.getElementById('orders-table-body').innerHTML = `
+                    <tr>
+                        <td colspan="7" style="text-align: center;">Произошла ошибка при загрузке заказов</td>
+                    </tr>
+                `;
+            }
+        }
+        
+       // Отображение заказов в таблице
+function renderOrders(orders) {
+    const tbody = document.getElementById('orders-table-body');
+    tbody.innerHTML = '';
+    
+    if (orders.length === 0) {
+        tbody.innerHTML = `
+            <tr>
+                <td colspan="7" style="text-align: center;">Заказы не найдены</td>
+            </tr>
+        `;
+        return;
+    }
+    
+    orders.forEach(order => {
+        const customer = order.User || {};
+        const items = Array.isArray(order.items) ? 
+            order.items.map(item => item.name || item.title).join(', ') : 
+            'Не указано';
+        
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td>${order.orderNumber}</td>
+            <td>
+                <div>${customer.fullName || order.customerName || 'Не указано'}</div>
+                <small style="color: #6c757d;">${customer.phone || order.customerPhone || ''}</small>
+            </td>
+            <td>${formatDate(order.createdAt)}</td>
+            <td>${items}</td>
+            <td>${formatPrice(order.total)} ₽</td>
+            <td>
+                <span class="status ${getStatusClass(order.status)}">
+                    ${getStatusText(order.status)}
+                </span>
+            </td>
+            <td>
+                <button class="action-btn" title="Изменить статус" onclick="openStatusModal(${order.id}, '${order.orderNumber}')">
+                    <i class="fas fa-edit"></i>
+                </button>
+            </td>
+        `;
+        tbody.appendChild(row);
+    });
+}
+        
+        // Открытие модального окна для изменения статуса
+        function openStatusModal(orderId, orderNumber) {
+            document.getElementById('modal-order-id').textContent = orderNumber;
+            document.getElementById('statusModal').style.display = 'flex';
+            
+            // Сохраняем ID заказа в кнопке подтверждения
+            document.getElementById('save-status').dataset.orderId = orderId;
+        }
+        
+        // Сохранение статуса
+        async function saveStatus() {
+            const orderId = document.getElementById('save-status').dataset.orderId;
+            const status = document.getElementById('order-status').value;
+            const reason = document.getElementById('cancel-reason').value;
+            
+            if (!orderId || !status) {
+                alert('Ошибка: не указан ID заказа или статус');
+                return;
+            }
+            
+            try {
+                const response = await fetch(`/api/admin/orders/${orderId}/status`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        status,
+                        reason: status === 'cancelled' ? reason : undefined
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    alert('Статус заказа успешно обновлен');
+                    closeModal();
+                    loadOrders();
+                    loadStats(); // Обновляем статистику
+                } else {
+                    throw new Error(data.message || 'Ошибка обновления статуса');
+                }
+            } catch (error) {
+                console.error('Ошибка:', error);
+                alert('Произошла ошибка при обновлении статуса: ' + error.message);
+            }
+        }
+        
+     
+        
+        // Экспорт в Word
+        async function exportToWord() {
+            try {
+                if (allOrders.length === 0) {
+                    alert('Нет данных для экспорта');
+                    return;
+                }
+                
+                // Формируем HTML для документа Word
+                let html = `
+                    <html xmlns:o='urn:schemas-microsoft-com:office:office' 
+                          xmlns:w='urn:schemas-microsoft-com:office:word' 
+                          xmlns='http://www.w3.org/TR/REC-html40'>
+                    <head>
+                        <meta charset="UTF-8">
+                        <title>Отчет о заказах</title>
+                        <style>
+                            body { font-family: Arial, sans-serif; }
+                            h1 { color: #2e6c80; }
+                            table { border-collapse: collapse; width: 100%; }
+                            th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+                            th { background-color: #f2f2f2; }
+                        </style>
+                    </head>
+                    <body>
+                        <h1>Отчет о заказах</h1>
+                        <p>Дата формирования: ${new Date().toLocaleDateString('ru-RU')}</p>
+                        <p>Фильтр по статусу: ${getStatusText(currentStatus)}</p>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>№ заказа</th>
+                                    <th>Клиент</th>
+                                    <th>Дата</th>
+                                    <th>Сумма</th>
+                                    <th>Статус</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                `;
+                
+                allOrders.forEach(order => {
+                    const customer = order.User || {};
+                    html += `
+                        <tr>
+                            <td>${order.orderNumber}</td>
+                            <td>${customer.fullName || order.customerName || 'Не указано'}</td>
+                            <td>${formatDate(order.createdAt)}</td>
+                            <td>${formatPrice(order.total)} ₽</td>
+                            <td>${getStatusText(order.status)}</td>
+                        </tr>
+                    `;
+                });
+                
+                html += `
+                            </tbody>
+                        </table>
+                        <p>Итого заказов: ${allOrders.length}</p>
+                        <p>Общая сумма: ${formatPrice(allOrders.reduce((sum, order) => sum + order.total, 0))} ₽</p>
+                    </body>
+                    </html>
+                `;
+                
+                // Создаем ссылку для скачивания
+                const blob = new Blob([html], { type: 'application/msword' });
+                const url = URL.createObjectURL(blob);
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = `orders_report_${new Date().toISOString().split('T')[0]}.doc`;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                
+            } catch (error) {
+                console.error('Ошибка экспорта в Word:', error);
+                alert('Произошла ошибка при экспорте в Word');
+            }
+        }
+        
+        // Утилиты
+        function getStatusText(status) {
+            const statusMap = {
+                'new': 'Новый',
+                'processing': 'В обработке',
+                'completed': 'Завершен',
+                'cancelled': 'Отменен'
+            };
+            return statusMap[status] || status;
+        }
+        
+        function getStatusClass(status) {
+            const statusClasses = {
+                'new': 'status-new',
+                'processing': 'status-processing',
+                'completed': 'status-completed',
+                'cancelled': 'status-cancelled'
+            };
+            return statusClasses[status] || '';
+        }
+        
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('ru-RU', {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+        }
+        
+        function formatPrice(price) {
+            return new Intl.NumberFormat('ru-RU').format(price);
+        }
+        
+        function closeModal() {
+            document.getElementById('statusModal').style.display = 'none';
+        }
+        
+        function debounce(func, wait) {
+            let timeout;
+            return function() {
+                const context = this, args = arguments;
+                clearTimeout(timeout);
+                timeout = setTimeout(() => func.apply(context, args), wait);
+            };
+        }
+        
+        // Обработчик изменения статуса в модальном окне
+        document.getElementById('order-status').addEventListener('change', function() {
+            document.getElementById('cancel-reason-group').style.display = 
+                this.value === 'cancelled' ? 'block' : 'none';
+        });
+        
+        // Закрытие модального окна при клике вне его
+        window.addEventListener('click', function(e) {
+            if (e.target === document.getElementById('statusModal')) {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+</html>

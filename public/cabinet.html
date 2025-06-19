@@ -1,0 +1,1985 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ВАУ! БУКЕТ! - цветы по низким ценам с доставкой по всему Оренбургу.</title>
+    <link rel="icon" type="images/x-icon" href="images/ico.png">
+    <link rel="stylesheet" href="fonts/stylesheet.css">
+    <link rel="stylesheet" href="css/swiper-bundle.min.css">
+    <link rel="stylesheet" href="css/magnific-popup.css">
+    <link rel="stylesheet" href="css/style.css">
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.css">
+    <style>
+    /* Мобильное меню - финальная версия */
+    @media (max-width: 992px) {
+        .header-bottom {
+            display: none;
+        }
+        
+        .mobile-header {
+            display: flex;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: #fff;
+            z-index: 100;
+            padding: 15px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Добавьте стили для мобильных иконок */
+        .mobile-actions-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .mobile-actions-header .cart,
+        .mobile-actions-header .account {
+            display: flex;
+        }
+
+        /* Добавляем отступ для контента, чтобы он не скрывался под шапкой */
+        body {
+            padding-top: 70px;
+        }
+
+        .s-banner {
+            margin-top: -20px; /* Компенсируем отступ для первого блока */
+        }
+    }
+
+    @media (min-width: 993px) {
+        .mobile-header,
+        .mobile-menu,
+        .menu-overlay {
+            display: none !important;
+        }
+        
+        /* Показываем иконки в обычном хедере */
+        .header-actions {
+            display: flex;
+        }
+        
+        /* Скрываем мобильные иконки на десктопе */
+        .mobile-actions-header {
+            display: none !important;
+        }
+
+        /* Убираем отступ для десктопной версии */
+        body {
+            padding-top: 0;
+        }
+    }
+    
+    .mobile-header {
+        display: none;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        background: #fff;
+        z-index: 100;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+    
+    /* Остальные стили остаются без изменений */
+    .mobile-header-inner {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+    
+    .burger-btn {
+        width: 24px;
+        height: 18px;
+        position: relative;
+        background: none;
+        border: none;
+        padding: 0;
+        cursor: pointer;
+    }
+    
+    .burger-btn span {
+        display: block;
+        width: 100%;
+        height: 2px;
+        background-color: #333;
+        position: absolute;
+        left: 0;
+        transition: all 0.3s ease;
+    }
+    
+    .burger-btn span:nth-child(1) {
+        top: 0;
+    }
+    
+    .burger-btn span:nth-child(2) {
+        top: 50%;
+        transform: translateY(-50%);
+    }
+    
+    .burger-btn span:nth-child(3) {
+        bottom: 0;
+    }
+    
+    .mobile-logo {
+        margin-right: auto;
+    }
+    
+    .mobile-actions-header {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+    
+    .mobile-menu {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 100%;
+        max-width: 320px;
+        height: 100%;
+        background: #fff;
+        z-index: 1000;
+        transition: right 0.3s ease;
+        box-sizing: border-box;
+        box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .mobile-menu.active {
+        right: 0;
+    }
+    
+    .mobile-menu-header {
+        padding: 15px 20px;
+        display: flex;
+        justify-content: flex-end;
+    }
+    
+    .close-menu {
+        background: none;
+        border: none;
+        font-size: 24px;
+        cursor: pointer;
+        padding: 5px;
+    }
+    
+    .mobile-menu-content {
+        padding: 0 20px 20px;
+        flex-grow: 1;
+        overflow-y: auto;
+    }
+    
+    .mobile-nav ul {
+        list-style: none;
+        padding: 0;
+        margin: 0 0 20px 0;
+    }
+    
+    .mobile-nav li {
+        margin-bottom: 15px;
+    }
+    
+    .mobile-nav a {
+        color: #333;
+        text-decoration: none;
+        font-size: 18px;
+        font-weight: 500;
+        display: block;
+        padding: 10px 0;
+        transition: color 0.2s;
+    }
+    
+    .mobile-nav a:hover {
+        color: #e91e63;
+    }
+    
+    .mobile-actions {
+        display: flex;
+        gap: 15px;
+        padding: 15px 0;
+        border-top: 1px solid #eee;
+        margin-top: auto;
+    }
+    
+    .mobile-search {
+        margin: 20px 0;
+    }
+    
+    .mobile-search input {
+        width: 100%;
+        padding: 10px 15px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-size: 16px;
+    }
+    
+    .menu-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 999;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+    }
+    
+    .menu-overlay.active {
+        opacity: 1;
+        visibility: visible;
+    }
+    
+    .no-scroll {
+        overflow: hidden;
+    }
+    
+    /* Стили для корзины (одинаковые для мобильной и ПК версии) */
+    .popup {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1001;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+    }
+    
+    .popup.active {
+        opacity: 1;
+        visibility: visible;
+    }
+    
+    .popup__container {
+        background-color: #fff;
+        border-radius: 10px;
+        padding: 30px;
+        max-width: 600px;
+        width: 90%;
+        max-height: 80vh;
+        overflow-y: auto;
+        position: relative;
+    }
+    
+    .popup__close {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        font-size: 24px;
+        background: none;
+        border: none;
+        cursor: pointer;
+    }
+    
+    .popup__title {
+        font-size: 24px;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+    
+    .popup__product-list {
+        margin-bottom: 20px;
+    }
+    
+    .popup__product-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 0;
+        border-bottom: 1px solid #eee;
+    }
+    
+    .popup__product-info {
+        display: flex;
+        align-items: center;
+    }
+    
+    .popup__product-image {
+        width: 60px;
+        height: 60px;
+        object-fit: cover;
+        margin-right: 15px;
+    }
+    
+    .popup__product-name {
+        font-weight: 500;
+    }
+    
+    .popup__product-price {
+        font-weight: 600;
+    }
+    
+    .popup__cost {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 10px;
+    }
+    
+    .popup__cost-title {
+        font-weight: 500;
+    }
+    
+    .popup__cost-value {
+        font-weight: 600;
+    }
+    
+    .bouquet-composition {
+        margin-top: 20px;
+        padding-top: 20px;
+        border-top: 1px solid #eee;
+    }
+    
+    .bouquet-composition h3 {
+        margin-bottom: 10px;
+    }
+    
+    .bouquet-composition ul {
+        list-style: none;
+        padding: 0;
+    }
+    
+    .bouquet-composition li {
+        margin-bottom: 5px;
+    }
+    
+    @media (max-width: 992px) {
+        .header-bottom {
+            display: none;
+        }
+        
+        .mobile-header {
+            display: flex;
+        }
+        
+        /* Скрываем иконки в обычном хедере */
+        .header-actions {
+            display: none;
+        }
+    }
+    
+    @media (min-width: 993px) {
+        .mobile-header,
+        .mobile-menu,
+        .menu-overlay {
+            display: none !important;
+        }
+        
+        /* Показываем иконки в обычном хедере */
+        .header-actions {
+            display: flex;
+        }
+    }
+    .error-message {
+        color: #e91e63;
+        font-size: 14px;
+        margin-bottom: 15px;
+        display: none; /* Скрываем сообщения об ошибках по умолчанию */
+    }
+    
+  
+    .form-container button[type="submit"]:hover {
+        background-color: #c2185b;
+    }
+    
+    .form-footer {
+        text-align: center;
+        margin-top: 20px;
+        font-size: 14px;
+    }
+    
+ 
+    
+    
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <!-- Мобильная шапка -->
+            <div class="mobile-header">
+                <a href="index.html" class="mobile-logo">
+                    <img src="images/logo-header.svg" alt="ВАУ! БУКЕТ!" width="120">
+                </a>
+                
+                <div class="mobile-header-inner">
+                    <!-- Переносим иконки из header-actions -->
+                    <div class="mobile-actions-header">  
+                        <a href="login.html" class="account" id="mobile-account-link">
+                            <img src="images/account.svg" alt="ВАУ! БУКЕТ!" id="mobile-account-icon">
+                        </a>
+                        <button class="cart" id="mobile-cart">
+                            <img class="cart__image" src="./images/car.svg" alt="Cart">
+                           <div class="cart__num" id="mobile-cart_num">0</div>
+                        </button>
+                    </div>
+                    
+                    <button class="burger-btn" id="burgerBtn">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Оригинальный хедер для ПК -->
+            <div class="header-bottom">
+                <div class="container">
+                    <div class="header-bottom-row">
+                        <a href="index.html" class="header-logo">
+                            <img src="images/logo-header.svg" alt="ВАУ! БУКЕТ!">
+                        </a>
+                        <nav class="menu-nav">
+                            <ul>
+                                <li><a href="index.html#a">О нас</a></li>
+                                <li><a href="index.html#b">Каталог</a></li>
+                                <li><a href="blog.html">Блог</a></li>
+                                <li><a href="contacts.html">Контакты</a></li>
+                                <li><a href="index.html#c">Отзывы</a></li>
+                            </ul>
+                        </nav>
+                        <div class="header-actions">  
+                            <a href="login.html" class="account" id="account-link">
+                                <img src="images/account.svg" alt="ВАУ! БУКЕТ!" id="account-icon">
+                            </a>
+                            <button class="cart" id="cart">
+                                <img class="cart__image" src="./images/car.svg" alt="Cart">
+                               <div class="cart__num" id="cart_num">0</div>  <!-- В десктопной версии -->
+                            </button>
+                        </div>
+
+                        <div class="search-container">
+                            <input type="text" id="search-input" placeholder="Поиск товаров...">
+                            <button id="search-button">
+                                <img src="images/lupa.png" alt="Поиск">
+                            </button>
+                            <div id="suggestions"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Мобильное меню -->
+        <div class="mobile-menu" id="mobileMenu">
+            <div class="mobile-menu-header">
+                <button class="close-menu" id="closeMenu">×</button>
+            </div>
+            
+            <div class="mobile-menu-content">
+                <nav class="mobile-nav">
+                    <ul>
+                        <li><a href="index.html#a">О нас</a></li>
+                                <li><a href="index.html#b">Каталог</a></li>
+                                <li><a href="blog.html">Блог</a></li>
+                                <li><a href="contacts.html">Контакты</a></li>
+                                <li><a href="index.html#c">Отзывы</a></li>
+                    </ul>
+                
+               
+            </div>
+        </div>
+        </nav>
+        <!-- Затемнение фона -->
+        <div class="menu-overlay" id="menuOverlay"></div>
+    </header>
+    <style>
+        :root {
+            --primary: #ff6b9d;
+            --secondary: #4CAF50;
+            --danger: #f44336;
+            --warning: #ff9800;
+            --info: #2196F3;
+            --dark: #343a40;
+            --light: #f8f9fa;
+        }
+        
+        
+        
+        /* Основной контент */
+        .account-container {
+            margin-top: 200px;
+            display: flex;
+            gap: 30px;
+            align-items: flex-start;
+        }
+        
+        /* Сайдбар профиля */
+        .profile-sidebar {
+            width: 300px;
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            position: sticky;
+            top: 20px;
+        }
+        
+        .profile-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .profile-photo {
+            position: relative;
+            width: 150px;
+            height: 150px;
+            margin: 0 auto 15px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 3px solid var(--primary);
+            background-color: #f5f5f5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .profile-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .profile-photo-edit {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            background-color: var(--primary);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+        
+        .profile-name {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .profile-email {
+            color: #777;
+            font-size: 14px;
+        }
+        
+        .profile-menu {
+            margin-top: 30px;
+        }
+        
+        .profile-menu ul {
+            list-style: none;
+        }
+        
+        .profile-menu li {
+            margin-bottom: 10px;
+        }
+        
+        .profile-menu a {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 15px;
+            color: #555;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: all 0.3s;
+        }
+        
+        .profile-menu a:hover,
+        .profile-menu a.active {
+            background-color: rgba(255, 107, 157, 0.1);
+            color: var(--primary);
+        }
+        
+        .profile-menu a i {
+            width: 20px;
+            text-align: center;
+        }
+        
+        /* Основная информация */
+        .account-content {
+            flex: 1;
+            background-color: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            min-width: 0;
+        }
+        
+        .section-title {
+            font-size: 22px;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        /* Форма профиля */
+        .profile-form .form-row {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .profile-form .form-group {
+            flex: 1;
+        }
+        
+        .profile-form label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        
+        .profile-form input,
+        .profile-form select,
+        .profile-form textarea {
+            width: 100%;
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        
+        .profile-form textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: #e55a8a;
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            border: 1px solid #ddd;
+        }
+        
+        .btn-outline:hover {
+            background-color: #f8f8f8;
+        }
+        
+        /* Таблица заказов */
+        .orders-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            table-layout: fixed;
+        }
+        
+        .orders-table th,
+        .orders-table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+            word-wrap: break-word;
+        }
+        
+        .orders-table th {
+            background-color: #f9f9f9;
+            font-weight: 600;
+        }
+        
+        .status {
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+            display: inline-block;
+            min-width: 100px;
+            text-align: center;
+        }
+        
+        .status-new {
+            background-color: #e3f2fd;
+            color: var(--info);
+        }
+        
+        .status-processing {
+            background-color: #fff8e1;
+            color: var(--warning);
+        }
+        
+        .status-completed {
+            background-color: #e8f5e9;
+            color: var(--secondary);
+        }
+        
+        .status-cancelled {
+            background-color: #ffebee;
+            color: var(--danger);
+        }
+        
+        .action-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #777;
+            margin-left: 10px;
+            padding: 5px;
+        }
+        
+        .action-btn:hover {
+            color: var(--primary);
+        }
+        
+        /* Вкладки */
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid #eee;
+            margin-bottom: 20px;
+        }
+        
+        .tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            position: relative;
+        }
+        
+        .tab.active {
+            color: var(--primary);
+        }
+        
+        .tab.active:after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--primary);
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        /* Модальное окно */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            background-color: white;
+            border-radius: 10px;
+            width: 500px;
+            max-width: 90%;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .modal-header {
+            padding: 15px 20px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .modal-body {
+            padding: 20px;
+        }
+        
+        .modal-footer {
+            padding: 15px 20px;
+            border-top: 1px solid #eee;
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+        
+        .no-orders, .no-addresses {
+            text-align: center;
+            padding: 40px 20px;
+            color: #777;
+        }
+        
+        .address-card {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            position: relative;
+        }
+        
+        .address-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .btn-sm {
+            padding: 5px 10px;
+            font-size: 13px;
+        }
+        
+        /* Адаптивность */
+        @media (max-width: 992px) {
+            .account-container {
+                flex-direction: column;
+            }
+            
+            .profile-sidebar {
+                width: 100%;
+                position: static;
+            }
+            
+            .profile-form .form-row {
+                flex-direction: column;
+                gap: 0;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+            }
+            
+            .orders-table {
+                display: block;
+                overflow-x: auto;
+            }
+            
+            .orders-table th, 
+            .orders-table td {
+                padding: 8px 10px;
+                font-size: 14px;
+            }
+            
+            .action-btn {
+                margin-left: 5px;
+            }
+        }
+
+        /* Стили для аватара */
+        .account-header .profile-photo {
+            width: 40px;
+            height: 40px;
+            border-width: 2px;
+        }
+
+        #avatar-modal .modal-content {
+            max-width: 500px;
+        }
+
+        #cropper-container img {
+            max-width: 100%;
+            max-height: 300px;
+        }
+
+        #avatar-preview-container {
+            text-align: center;
+            margin-top: 20px;
+            display: none;
+        }
+
+        #avatar-preview {
+            max-width: 200px;
+            max-height: 200px;
+            border-radius: 50%;
+            margin-top: 10px;
+        }
+
+        #avatar-crop-container {
+            display: none;
+        }
+
+        #cropper-container {
+            width: 100%;
+            height: 300px;
+        }
+        .account-header {
+    display: none;
+}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+           
+            <div class="account-header">
+                <span id="user-name"></span>
+                <div class="profile-photo" style="width: 40px; height: 40px;">
+                    <img src="https://via.placeholder.com/150" alt="Профиль" id="header-photo">
+                </div>
+            </div>
+        </header>
+        
+        <div class="account-container">
+            <!-- Сайдбар профиля -->
+            <div class="profile-sidebar">
+                <div class="profile-header">
+                    <div class="profile-photo">
+                        <img src="https://via.placeholder.com/150" alt="Профиль" id="profile-image">
+                        <div class="profile-photo-edit" onclick="openAvatarModal()">
+                            <i class="fas fa-camera"></i>
+                        </div>
+                    </div>
+                    <div class="profile-name" id="profile-name">Загрузка...</div>
+                    <div class="profile-email" id="profile-email"></div>
+                </div>
+                
+                <div class="profile-menu">
+                    <ul>
+                        <li><a href="#" class="active" onclick="showTab('profile'); return false;"><i class="fas fa-user"></i> Личные данные</a></li>
+                        <li><a href="#" onclick="showTab('current-orders'); return false;"><i class="fas fa-shopping-cart"></i> Текущие заказы</a></li>
+                        <li><a href="#" onclick="showTab('order-history'); return false;"><i class="fas fa-history"></i> История заказов</a></li>
+                        <li><a href="#" onclick="showTab('addresses'); return false;"><i class="fas fa-map-marker-alt"></i> Адреса доставки</a></li>
+                        <li><a href="#" onclick="showTab('settings'); return false;"><i class="fas fa-cog"></i> Настройки</a></li>
+                        <li><a href="#" id="logout-link"><i class="fas fa-sign-out-alt"></i> Выйти</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Основной контент -->
+            <div class="account-content">
+                <!-- Личные данные -->
+                <div id="profile" class="tab-content active">
+                    <h2 class="section-title">Личные данные</h2>
+                    <form class="profile-form" id="profile-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="full-name">ФИО</label>
+                                <input type="text" id="full-name" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="user-phone">Телефон</label>
+                                <input type="tel" id="user-phone" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="user-email">Email</label>
+                                <input type="email" id="user-email" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <button type="button" class="btn btn-outline" id="cancel-changes">Отмена</button>
+                            <button type="submit" class="btn btn-primary" id="save-changes">Сохранить изменения</button>
+                        </div>
+                    </form>
+                </div>
+                
+                <!-- Текущие заказы -->
+                <div id="current-orders" class="tab-content">
+                    <h2 class="section-title">Текущие заказы</h2>
+                    <div class="no-orders" id="no-current-orders">
+                        <p>У вас нет текущих заказов</p>
+                    </div>
+                    <table class="orders-table" id="current-orders-table" style="display: none;">
+                        <thead>
+                            <tr>
+                                <th style="width: 15%;">№ заказа</th>
+                                <th style="width: 15%;">Дата</th>
+                                <th style="width: 30%;">Состав</th>
+                                <th style="width: 10%;">Сумма</th>
+                                <th style="width: 15%;">Статус</th>
+                                <th style="width: 15%;">Действия</th>
+                            </tr>
+                        </thead>
+                        <tbody id="current-orders-body">
+                            <!-- Заказы будут загружены через JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+                
+                <!-- История заказов -->
+                <div id="order-history" class="tab-content">
+                    <h2 class="section-title">История заказов</h2>
+                    <div class="tabs">
+                        <div class="tab active" onclick="filterOrders('all')">Все</div>
+                        <div class="tab" onclick="filterOrders('completed')">Завершенные</div>
+                        <div class="tab" onclick="filterOrders('cancelled')">Отмененные</div>
+                    </div>
+                    
+                    <div class="no-orders" id="no-history-orders">
+                        <p>У вас пока нет заказов</p>
+                    </div>
+                    <table class="orders-table" id="history-orders-table" style="display: none;">
+                        <thead>
+                            <tr>
+                                <th style="width: 15%;">№ заказа</th>
+                                <th style="width: 15%;">Дата</th>
+                                <th style="width: 30%;">Состав</th>
+                                <th style="width: 10%;">Сумма</th>
+                                <th style="width: 15%;">Статус</th>
+                                <th style="width: 15%;">Действия</th>
+                            </tr>
+                        </thead>
+                        <tbody id="history-orders-body">
+                            <!-- История заказов будет загружена через JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+                
+                <!-- Адреса доставки -->
+                <div id="addresses" class="tab-content">
+                    <h2 class="section-title">Адреса доставки</h2>
+                    <div class="address-list" id="address-list">
+                        <div class="no-addresses">
+                            <p>У вас нет сохраненных адресов</p>
+                        </div>
+                    </div>
+                    
+                    <button class="btn btn-primary" id="add-address-btn" style="margin-top: 20px;">
+                        <i class="fas fa-plus"></i> Добавить новый адрес
+                    </button>
+                </div>
+                
+                <!-- Настройки -->
+<div id="settings" class="tab-content">
+    <h2 class="section-title">Настройки</h2>
+    <form class="profile-form" id="settings-form">
+        <div class="form-group" style="margin-top: 20px;">
+            <label for="current-password">Текущий пароль</label>
+            <input type="password" id="current-password" placeholder="Введите текущий пароль">
+            
+            <label for="new-password" style="margin-top: 15px;">Новый пароль</label>
+            <input type="password" id="new-password" placeholder="Введите новый пароль">
+            
+            <label for="confirm-password" style="margin-top: 15px;">Подтвердите новый пароль</label>
+            <input type="password" id="confirm-password" placeholder="Повторите новый пароль">
+        </div>
+        
+        <div class="form-row" style="margin-top: 20px;">
+            <button type="button" class="btn btn-outline" id="cancel-settings">Отмена</button>
+            <button type="submit" class="btn btn-primary" id="save-settings">Сохранить настройки</button>
+        </div>
+    </form>
+</div>
+    
+    <!-- Модальное окно отмены заказа -->
+    <div class="modal" id="cancel-order-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Отмена заказа #<span id="modal-order-id"></span></h3>
+                <button class="action-btn" onclick="closeModal()"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="cancel-reason">Причина отмены</label>
+                    <select id="cancel-reason" class="form-control">
+                        <option value="">Выберите причину...</option>
+                        <option value="changed-mind">Передумал(а)</option>
+                        <option value="wrong-item">Выбрал(а) не тот товар</option>
+                        <option value="delivery-issues">Проблемы с доставкой</option>
+                        <option value="other">Другая причина</option>
+                    </select>
+                </div>
+                <div class="form-group" id="other-reason-group" style="display: none;">
+                    <label for="other-reason">Укажите причину</label>
+                    <textarea id="other-reason" class="form-control" placeholder="Опишите причину отмены..."></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" onclick="closeModal()">Отмена</button>
+                <button class="btn btn-primary" id="confirm-cancel">Подтвердить отмену</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Модальное окно добавления адреса -->
+    <div class="modal" id="add-address-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Добавить новый адрес</h3>
+                <button class="action-btn" onclick="closeModal()"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <form id="address-form">
+                    <div class="form-group">
+                        <label for="address-name">Название адреса (например: Дом, Работа)</label>
+                        <input type="text" id="address-name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="address-city">Город</label>
+                        <input type="text" id="address-city" value="Оренбург" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="address-street">Улица</label>
+                        <input type="text" id="address-street" required>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="address-house">Дом</label>
+                            <input type="text" id="address-house" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="address-apartment">Квартира</label>
+                            <input type="text" id="address-apartment">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="address-comment">Комментарий для курьера</label>
+                        <textarea id="address-comment" rows="3"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" onclick="closeModal()">Отмена</button>
+                <button class="btn btn-primary" id="save-address">Сохранить адрес</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Модальное окно для загрузки аватара -->
+    <div class="modal" id="avatar-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Изменение аватара</h3>
+                <button class="action-btn" onclick="closeModal()"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <div id="avatar-upload-container">
+                    <div class="form-group">
+                        <label for="avatar-file">Выберите изображение</label>
+                        <input type="file" id="avatar-file" accept="image/*">
+                    </div>
+                    <div id="avatar-preview-container">
+                        <p>Предпросмотр:</p>
+                        <img id="avatar-preview">
+                    </div>
+                </div>
+                <div id="avatar-crop-container">
+                    <p>Обрежьте изображение:</p>
+                    <div id="cropper-container"></div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" onclick="closeModal()">Отмена</button>
+                <button class="btn btn-primary" id="save-avatar">Сохранить аватар</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js"></script>
+    <script>
+        // Глобальные переменные
+        let cropper;
+        let currentOrderToCancel = null;
+        
+        // Загрузка данных пользователя
+        document.addEventListener('DOMContentLoaded', async () => {
+            try {
+                const response = await fetch('/api/user');
+                if (response.status === 401) {
+                    window.location.href = '/login.html';
+                    return;
+                }
+                
+                if (!response.ok) {
+                    throw new Error('Ошибка загрузки данных');
+                }
+                
+                const userData = await response.json();
+                
+                // Заполняем данные пользователя
+                document.getElementById('profile-name').textContent = userData.user.fullName;
+                document.getElementById('profile-email').textContent = userData.user.email;
+                document.getElementById('user-name').textContent = userData.user.fullName.split(' ')[0];
+                document.getElementById('full-name').value = userData.user.fullName;
+                document.getElementById('user-phone').value = userData.user.phone;
+                document.getElementById('user-email').value = userData.user.email;
+                
+                // Устанавливаем аватар
+                if (userData.user.avatar) {
+                    setAvatar(userData.user.avatar);
+                } else {
+                    // Используем граватар по умолчанию
+                    const defaultAvatar = `https://www.gravatar.com/avatar/${md5(userData.user.email)}?d=identicon`;
+                    setAvatar(defaultAvatar);
+                }
+                
+                // Загрузка заказов
+                loadCurrentOrders();
+                loadOrderHistory();
+                loadAddresses();
+                
+                // Обработчик выхода из системы
+                document.getElementById('logout-link').addEventListener('click', async (e) => {
+                    e.preventDefault();
+                    try {
+                        const response = await fetch('/api/logout', { 
+                            method: 'POST' 
+                        });
+                        
+                        if (response.ok) {
+                            window.location.href = '/';
+                        }
+                    } catch (error) {
+                        console.error('Ошибка при выходе:', error);
+                        alert('Произошла ошибка при выходе из системы');
+                    }
+                });
+                
+                // Обработчики форм
+                setupFormHandlers();
+                
+                // Обработчик загрузки аватара
+                setupAvatarUpload();
+                
+            } catch (error) {
+                console.error('Ошибка:', error);
+                alert('Произошла ошибка при загрузке данных');
+            }
+        });
+        
+        function setAvatar(avatarUrl) {
+            document.getElementById('profile-image').src = avatarUrl;
+            document.getElementById('header-photo').src = avatarUrl;
+        }
+        
+        function openAvatarModal() {
+            document.getElementById('avatar-modal').style.display = 'flex';
+            document.getElementById('avatar-upload-container').style.display = 'block';
+            document.getElementById('avatar-preview-container').style.display = 'none';
+            document.getElementById('avatar-crop-container').style.display = 'none';
+            document.getElementById('save-avatar').style.display = 'none';
+            document.getElementById('avatar-file').value = '';
+        }
+        
+        function setupAvatarUpload() {
+            const avatarFileInput = document.getElementById('avatar-file');
+            const avatarPreview = document.getElementById('avatar-preview');
+            const avatarPreviewContainer = document.getElementById('avatar-preview-container');
+            const avatarUploadContainer = document.getElementById('avatar-upload-container');
+            const avatarCropContainer = document.getElementById('avatar-crop-container');
+            const saveAvatarBtn = document.getElementById('save-avatar');
+            
+            avatarFileInput.addEventListener('change', function(e) {
+                if (this.files && this.files[0]) {
+                    const file = this.files[0];
+                    const reader = new FileReader();
+                    
+                    reader.onload = function(event) {
+                        avatarPreview.src = event.target.result;
+                        avatarPreviewContainer.style.display = 'block';
+                        
+                        // Инициализация Cropper.js
+                        if (cropper) {
+                            cropper.destroy();
+                        }
+                        
+                        avatarUploadContainer.style.display = 'none';
+                        avatarCropContainer.style.display = 'block';
+                        saveAvatarBtn.style.display = 'block';
+                        
+                        const image = document.createElement('img');
+                        image.id = 'cropper-image';
+                        image.src = event.target.result;
+                        document.getElementById('cropper-container').innerHTML = '';
+                        document.getElementById('cropper-container').appendChild(image);
+                        
+                        cropper = new Cropper(image, {
+                            aspectRatio: 1,
+                            viewMode: 1,
+                            autoCropArea: 0.8,
+                            responsive: true,
+                            guides: false
+                        });
+                    };
+                    
+                    reader.readAsDataURL(file);
+                }
+            });
+            
+            saveAvatarBtn.addEventListener('click', async function() {
+                if (!cropper) {
+                    alert('Пожалуйста, выберите изображение');
+                    return;
+                }
+                
+                try {
+                    // Получаем обрезанное изображение
+                    const canvas = cropper.getCroppedCanvas({
+                        width: 300,
+                        height: 300,
+                        minWidth: 100,
+                        minHeight: 100,
+                        maxWidth: 1000,
+                        maxHeight: 1000,
+                        fillColor: '#fff',
+                        imageSmoothingEnabled: true,
+                        imageSmoothingQuality: 'high',
+                    });
+                    
+                    if (!canvas) {
+                        alert('Не удалось обрезать изображение');
+                        return;
+                    }
+                    
+                    // Конвертируем в Blob
+                    canvas.toBlob(async (blob) => {
+                        const formData = new FormData();
+                        formData.append('avatar', blob, 'avatar.jpg');
+                        
+                        const response = await fetch('/api/upload-avatar', {
+                            method: 'POST',
+                            body: formData
+                        });
+                        
+                        if (response.ok) {
+                            const data = await response.json();
+                            setAvatar(data.avatarUrl);
+                            closeModal();
+                            alert('Аватар успешно обновлен');
+                        } else {
+                            throw new Error('Ошибка загрузки аватара');
+                        }
+                    }, 'image/jpeg', 0.9);
+                    
+                } catch (error) {
+                    console.error('Ошибка загрузки аватара:', error);
+                    alert('Произошла ошибка при загрузке аватара');
+                }
+            });
+        }
+        
+        function showTab(tabId) {
+            // Скрыть все вкладки
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Показать выбранную вкладку
+            document.getElementById(tabId).classList.add('active');
+            
+            // Обновить активную ссылку в меню
+            document.querySelectorAll('.profile-menu a').forEach(link => {
+                link.classList.remove('active');
+            });
+            event.currentTarget.classList.add('active');
+            
+            // Загрузить данные при необходимости
+            if (tabId === 'current-orders') {
+                loadCurrentOrders();
+            } else if (tabId === 'order-history') {
+                loadOrderHistory();
+            } else if (tabId === 'addresses') {
+                loadAddresses();
+            }
+        }
+        
+        function getStatusText(status) {
+            const statusMap = {
+                'new': 'Новый',
+                'processing': 'В обработке',
+                'completed': 'Завершен',
+                'cancelled': 'Отменен'
+            };
+            return statusMap[status] || status;
+        }
+        
+        function getStatusClass(status) {
+            const statusClasses = {
+                'new': 'status-new',
+                'processing': 'status-processing',
+                'completed': 'status-completed',
+                'cancelled': 'status-cancelled'
+            };
+            return statusClasses[status] || '';
+        }
+        
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('ru-RU', {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+        }
+        
+        function formatPrice(price) {
+            return new Intl.NumberFormat('ru-RU').format(price);
+        }
+        
+        function setupFormHandlers() {
+            // Форма профиля
+            document.getElementById('profile-form').addEventListener('submit', async (e) => {
+                e.preventDefault();
+                try {
+                    const response = await fetch('/api/update-profile', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            fullName: document.getElementById('full-name').value,
+                            phone: document.getElementById('user-phone').value,
+                            email: document.getElementById('user-email').value
+                        })
+                    });
+                    
+                    if (response.ok) {
+                        alert('Данные успешно обновлены');
+                        // Обновляем имя в шапке
+                        document.getElementById('user-name').textContent = 
+                            document.getElementById('full-name').value.split(' ')[0];
+                        document.getElementById('profile-name').textContent = 
+                            document.getElementById('full-name').value;
+                    } else {
+                        throw new Error('Ошибка обновления данных');
+                    }
+                } catch (error) {
+                    console.error('Ошибка:', error);
+                    alert('Произошла ошибка при обновлении данных');
+                }
+            });
+            
+            // Кнопка отмены изменений профиля
+            document.getElementById('cancel-changes').addEventListener('click', () => {
+                // Восстанавливаем исходные значения
+                document.getElementById('full-name').value = document.getElementById('profile-name').textContent;
+                document.getElementById('user-phone').value = document.getElementById('user-phone').dataset.original;
+                document.getElementById('user-email').value = document.getElementById('profile-email').textContent;
+            });
+            
+           // Форма настроек
+document.getElementById('settings-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    const newPassword = document.getElementById('new-password').value;
+    const confirmPassword = document.getElementById('confirm-password').value;
+    
+    if (newPassword && newPassword !== confirmPassword) {
+        alert('Новые пароли не совпадают');
+        return;
+    }
+    
+    try {
+        const response = await fetch('/api/update-settings', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                currentPassword: document.getElementById('current-password').value,
+                newPassword: newPassword
+            })
+        });
+        
+        if (response.ok) {
+            alert('Настройки успешно обновлены');
+            document.getElementById('current-password').value = '';
+            document.getElementById('new-password').value = '';
+            document.getElementById('confirm-password').value = '';
+        } else {
+            const data = await response.json();
+            throw new Error(data.message || 'Ошибка обновления настроек');
+        }
+    } catch (error) {
+        console.error('Ошибка:', error);
+        alert(error.message || 'Произошла ошибка при обновлении настроек');
+    }
+});
+        
+        // Кнопка добавления адреса
+        document.getElementById('add-address-btn').addEventListener('click', () => {
+            document.getElementById('add-address-modal').style.display = 'flex';
+        });
+        
+        // Сохранение адреса
+        document.getElementById('save-address').addEventListener('click', async () => {
+            try {
+                const response = await fetch('/api/add-address', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        name: document.getElementById('address-name').value,
+                        city: document.getElementById('address-city').value,
+                        street: document.getElementById('address-street').value,
+                        house: document.getElementById('address-house').value,
+                        apartment: document.getElementById('address-apartment').value,
+                        comment: document.getElementById('address-comment').value
+                    })
+                });
+                
+                if (response.ok) {
+                    closeModal();
+                    loadAddresses();
+                    document.getElementById('address-form').reset();
+                } else {
+                    throw new Error('Ошибка сохранения адреса');
+                }
+            } catch (error) {
+                console.error('Ошибка:', error);
+                alert('Произошла ошибка при сохранении адреса');
+            }
+        });
+        
+        // Причина отмены заказа
+        document.getElementById('cancel-reason').addEventListener('change', function() {
+            document.getElementById('other-reason-group').style.display = 
+                this.value === 'other' ? 'block' : 'none';
+        });
+        
+        // Подтверждение отмены заказа
+        document.getElementById('confirm-cancel').addEventListener('click', async () => {
+            if (!currentOrderToCancel) return;
+            
+            const reason = document.getElementById('cancel-reason').value;
+            if (!reason) {
+                alert('Пожалуйста, укажите причину отмены');
+                return;
+            }
+            
+            const reasonText = reason === 'other' 
+                ? document.getElementById('other-reason').value
+                : document.getElementById('cancel-reason').options[
+                    document.getElementById('cancel-reason').selectedIndex].text;
+            
+            try {
+                const response = await fetch(`/api/cancel-order/${currentOrderToCancel}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        reason: reasonText
+                    })
+                });
+                
+                if (response.ok) {
+                    alert('Заказ успешно отменен');
+                    closeModal();
+                    loadCurrentOrders();
+                    loadOrderHistory();
+                } else {
+                    throw new Error('Ошибка отмены заказа');
+                }
+            } catch (error) {
+                console.error('Ошибка:', error);
+                alert('Произошла ошибка при отмене заказа');
+            }
+        });
+    }
+    
+    async function loadCurrentOrders() {
+        try {
+            const response = await fetch('/api/current-orders');
+            const data = await response.json();
+            
+            const noOrdersElement = document.getElementById('no-current-orders');
+            const tableElement = document.getElementById('current-orders-table');
+            const tbody = document.getElementById('current-orders-body');
+            
+            if (data.orders && data.orders.length > 0) {
+                noOrdersElement.style.display = 'none';
+                tableElement.style.display = 'table';
+                tbody.innerHTML = '';
+                
+                data.orders.forEach(order => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${order.orderNumber}</td>
+                        <td>${formatDate(order.createdAt)}</td>
+                        <td>${order.items.map(item => item.name || item.title).join(', ')}</td>
+                        <td>${formatPrice(order.total)} ₽</td>
+                        <td><span class="status ${getStatusClass(order.status)}">${getStatusText(order.status)}</span></td>
+                        <td>
+                            <button class="action-btn" title="Подробнее" onclick="viewOrderDetails('${order.id}')">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                            ${order.status === 'new' || order.status === 'processing' ? `
+                            <button class="action-btn" title="Отменить" onclick="openCancelModal('${order.id}', '${order.orderNumber}')">
+                                <i class="fas fa-times"></i>
+                            </button>
+                            ` : ''}
+                        </td>
+                    `;
+                    tbody.appendChild(row);
+                });
+            } else {
+                noOrdersElement.style.display = 'block';
+                tableElement.style.display = 'none';
+                tbody.innerHTML = '';
+            }
+        } catch (error) {
+            console.error('Ошибка загрузки текущих заказов:', error);
+            document.getElementById('no-current-orders').style.display = 'block';
+            document.getElementById('current-orders-table').style.display = 'none';
+        }
+    }
+    
+    async function loadOrderHistory() {
+        try {
+            const response = await fetch('/api/order-history');
+            const data = await response.json();
+            
+            const noOrdersElement = document.getElementById('no-history-orders');
+            const tableElement = document.getElementById('history-orders-table');
+            const tbody = document.getElementById('history-orders-body');
+            
+            if (data.orders && data.orders.length > 0) {
+                noOrdersElement.style.display = 'none';
+                tableElement.style.display = 'table';
+                tbody.innerHTML = '';
+                
+                data.orders.forEach(order => {
+                    const row = document.createElement('tr');
+                    row.setAttribute('data-status', order.status);
+                    row.innerHTML = `
+                        <td>${order.orderNumber}</td>
+                        <td>${formatDate(order.createdAt)}</td>
+                        <td>${order.items.map(item => item.name || item.title).join(', ')}</td>
+                        <td>${formatPrice(order.total)} ₽</td>
+                        <td><span class="status ${getStatusClass(order.status)}">${getStatusText(order.status)}</span></td>
+                        <td>
+                            <button class="action-btn" title="Подробнее" onclick="viewOrderDetails('${order.id}')">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                            ${order.status === 'completed' ? `
+                            <button class="action-btn" title="Повторить" onclick="repeatOrder('${order.id}')">
+                                <i class="fas fa-redo"></i>
+                            </button>
+                            ` : ''}
+                        </td>
+                    `;
+                    tbody.appendChild(row);
+                });
+            } else {
+                noOrdersElement.style.display = 'block';
+                tableElement.style.display = 'none';
+                tbody.innerHTML = '';
+            }
+        } catch (error) {
+            console.error('Ошибка загрузки истории заказов:', error);
+            document.getElementById('no-history-orders').style.display = 'block';
+            document.getElementById('history-orders-table').style.display = 'none';
+        }
+    }
+
+    async function loadAddresses() {
+        try {
+            const response = await fetch('/api/addresses');
+            const data = await response.json();
+            
+            const addressList = document.getElementById('address-list');
+            addressList.innerHTML = '';
+            
+            if (data.addresses && data.addresses.length > 0) {
+                data.addresses.forEach(address => {
+                    const addressCard = document.createElement('div');
+                    addressCard.className = 'address-card';
+                    addressCard.innerHTML = `
+                        <h3>${address.name}</h3>
+                        <p>г. ${address.city}, ул. ${address.street}, д. ${address.house}${address.apartment ? ', кв. ' + address.apartment : ''}</p>
+                        ${address.comment ? `<p><small>Комментарий: ${address.comment}</small></p>` : ''}
+                        <div class="address-actions">
+                            <button class="btn btn-outline btn-sm" onclick="editAddress('${address.id}')">Изменить</button>
+                            <button class="btn btn-outline btn-sm" onclick="deleteAddress('${address.id}')">Удалить</button>
+                        </div>
+                    `;
+                    addressList.appendChild(addressCard);
+                });
+            } else {
+                addressList.innerHTML = '<div class="no-addresses"><p>У вас нет сохраненных адресов</p></div>';
+            }
+        } catch (error) {
+            console.error('Ошибка загрузки адресов:', error);
+        }
+    }
+
+    function openCancelModal(orderId, orderNumber) {
+        currentOrderToCancel = orderId;
+        document.getElementById('modal-order-id').textContent = orderNumber;
+        document.getElementById('cancel-order-modal').style.display = 'flex';
+        // Сброс формы
+        document.getElementById('cancel-reason').value = '';
+        document.getElementById('other-reason').value = '';
+        document.getElementById('other-reason-group').style.display = 'none';
+    }
+
+    function closeModal() {
+        document.querySelectorAll('.modal').forEach(modal => {
+            modal.style.display = 'none';
+        });
+        currentOrderToCancel = null;
+    }
+
+    function viewOrderDetails(orderId) {
+        // Здесь можно реализовать модальное окно с деталями заказа
+        alert(`Детали заказа #${orderId} будут показаны здесь`);
+        // В реальном приложении здесь будет запрос к API и отображение деталей
+    }
+
+    function repeatOrder(orderId) {
+        // Повтор заказа
+        if (confirm(`Вы хотите повторить заказ #${orderId}?`)) {
+            alert(`Заказ #${orderId} добавлен в корзину`);
+            // В реальном приложении здесь будет запрос к API
+        }
+    }
+
+    function filterOrders(status) {
+        const rows = document.querySelectorAll('#history-orders-body tr');
+        const tabs = document.querySelectorAll('#order-history .tabs .tab');
+        
+        // Обновить активную вкладку фильтра
+        tabs.forEach(tab => {
+            tab.classList.remove('active');
+        });
+        event.currentTarget.classList.add('active');
+        
+        // Показать/скрыть строки таблицы
+        rows.forEach(row => {
+            if (status === 'all' || row.getAttribute('data-status') === status) {
+                row.style.display = '';
+            } else {
+                row.style.display = 'none';
+            }
+        });
+    }
+
+    function editAddress(addressId) {
+        // Реализация редактирования адреса
+        alert(`Редактирование адреса с ID: ${addressId}`);
+        // В реальном приложении здесь будет открытие модального окна с формой
+    }
+
+    async function deleteAddress(addressId) {
+        if (confirm('Вы уверены, что хотите удалить этот адрес?')) {
+            try {
+                const response = await fetch(`/api/delete-address/${addressId}`, {
+                    method: 'DELETE'
+                });
+                
+                if (response.ok) {
+                    loadAddresses();
+                } else {
+                    throw new Error('Ошибка удаления адреса');
+                }
+            } catch (error) {
+                console.error('Ошибка:', error);
+                alert('Произошла ошибка при удалении адреса');
+            }
+        }
+    }
+
+    // Добавляем функцию для генерации MD5 хэша (необходима для gravatar)
+    function md5(string) {
+        return crypto.createHash('md5').update(string).digest('hex');
+    }
+
+    // Закрытие модального окна при клике вне его
+    window.addEventListener('click', function(e) {
+        if (e.target.classList.contains('modal')) {
+            closeModal();
+        }
+    });
+
+    // Инициализация при загрузке
+    document.addEventListener('DOMContentLoaded', () => {
+        // Установка обработчиков событий
+        document.querySelectorAll('.profile-menu a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const tabId = this.getAttribute('onclick').match(/showTab\('([^']+)'/)[1];
+                showTab(tabId);
+            });
+        });
+
+        // Загрузка начальных данных
+        loadCurrentOrders();
+        loadOrderHistory();
+        loadAddresses();
+    });
+</script>
+<div class="popup" id="cartPopup">
+    <div class="popup__container" id="popup_container">
+        <div class="popup__item">
+            <h1 class="popup__title">Ваша корзина</h1>
+        </div>
+
+        <div class="popup__item" id="popup_product_list">
+            <!-- Товары будут добавляться сюда -->
+        </div>
+
+        <div class="popup__item">
+            <div class="popup__cost">
+                <h2 class="popup__cost-title">Итого</h2>
+                <output class="popup__cost-value" id="popup_cost">0 руб</output>
+            </div>
+
+            <div class="popup__cost">
+                <h2 class="popup__cost-title">Скидка</h2>
+                <output class="popup__cost-value" id="popup_discount">0 руб</output>
+            </div>
+
+            <div class="popup__cost">
+                <h2 class="popup__cost-title">Итого со скидкой</h2>
+                <output class="popup__cost-value" id="popup_cost_discount">0 руб</output>
+            </div>
+
+            <div id="bouquet_composition" class="bouquet-composition">
+                <!-- Состав букета будет добавляться сюда -->
+            </div>
+
+     
+        </div>
+
+        <button class="popup__close" id="popup_close">&#10006;</button>
+    </div>
+</div>
+</div>
+</div>
+</div>
+<footer class="site-footer">
+		<div class="container">
+			<div class="footer-row">
+				<div class="footer-left">
+					<a href="index.html" class="footer-logo">
+						<img src="images/logo-footer.svg" alt="Вау букет">
+					</a>
+					<div class="footer-info">
+						<div class="footer-info-item">
+							<span class="footer-info-icon">
+								<img src="images/location-footer.svg" alt="Локация">
+							</span>
+							<span>Г. Оренбург, Салмышская 67/1</span>
+						</div>
+
+						<div class="footer-info-item">
+							<span class="footer-info-icon">
+								<img src="images/phone-footer.svg" alt="Телефон">
+							</span>
+							<span>+7 (901) 891-41-23</span>
+						</div>
+
+						<div class="footer-info-item">
+							<span class="footer-info-icon">
+								<img src="images/email-footer.svg" alt="Email">
+							</span>
+							<span> info@wow-buket.ru</span>
+						</div>
+						
+					</div>
+
+					<div class="footer-social">
+						<a href="https://t.me/wow_bouquet_oren">
+							<img src="images/wk.svg" alt="Телеграмм">
+						</a>
+						<a href="https://api.whatsapp.com/send/?phone=79018914123&text&type=phone_number&app_absent=0">
+							<img src="images/wh.svg" alt="Вотсап">
+						</a>
+						<a href="https://vk.com/wow_bouquet_oren">
+							<img src="images/vk1.svg" alt="Вконтакте">
+						</a>
+					</div>
+				</div>
+
+				<div class="footer-right">
+
+					<div class="footer-menu">
+						<div class="footer-title">Каталог</div>
+						<ul>
+					<li><a href="Monobouquets.html">Монобукеты</a></li>
+					<li><a href="AuthorBouquets.html">Авторские букеты</a></li>
+					<li><a href="DriedFlowerBouquets.html">Букеты из сухоцветов</a></li>
+					<li><a href="FieldBouquets.html">Букеты полевые</a></li>
+					<li><a href="FlowersInBox.html">Цветы в коробке</a></li>
+					<li><a href="FlowersInBasket.html">Цветы в корзине</a></li>
+					<li><a href="SingleFlowers.html">Цветы по штучно</a></li>
+					<li><a href="BridalBouquets.html">Букеты невесты</a></li>
+
+						</ul>
+					</div>
+
+					<div class="footer-menu">
+						<div class="footer-title">Блог</div>
+						<ul>
+							<li><a href="blog-single.html">Мастер-класс по составлению букетов</a></li>
+							<li><a href="blog-single2.html">Конкурс на лучшее фото с цветами</a></li>
+							<li><a href="blog-single3.html">Секреты ухода за комнатными растениями</a></li>
+							<li><a href="blog-single4.html">Символика цветов: что означают разные виды</a></li>
+						</ul>
+					</div>
+
+					<div class="footer-menu">
+						<div class="footer-title">Часы работы</div>
+						<ul>
+							<li>Пн: 9:00 - 21:00</li>
+							<li>Вт: 9:00 - 21:00</li>
+							<li>Ср: 9:00 - 21:00</li>
+							<li>Чт: 9:00 - 21:00</li>
+							<li>Пт: 9:00 - 21:00</li>
+							<li>Сб: 9:00 - 20:00</li>
+							<li>Вс: 9:00 - 20:00</li>
+						</ul>
+					</div>
+
+				</div>
+			</div>
+		</div>
+
+		<div class="footer-copyright">
+			<div class="container">
+				<div>
+					2025 © ВАУ БУКЕТ! Все права защищены
+				</div>
+			</div>
+		</div>
+		
+	</footer>
+<script src="ф.js"></script>
+	<script defer src="js/main.js"></script>
+	<script src="js/jquery-3.6.4.min.js"></script>
+	<script src="js/jquery.magnific-popup.min.js"></script>
+  	<script src="js/swiper-bundle.min.js"></script>
+	<script src="js/script.js"></script>
+	<script src="./scripts/main.js"></script>
+    
+</body>
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Заказ оформлен - ВАУ! БУКЕТ!</title>
+    <style>
+        .order-success {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 30px;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        .order-success h1 {
+            color: #4CAF50;
+        }
+        .order-number {
+            font-size: 24px;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+        .order-details {
+            text-align: left;
+            margin-top: 30px;
+        }
+        .btn {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 10px 20px;
+            background: #ff6b6b;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="order-success">
+        <h1>Заказ успешно оформлен!</h1>
+
+        
+        <div class="order-number" id="order-number"></div>
+        
+        <div class="order-details">
+           
+            <p>Вы можете отслеживать статус заказа в <a href="cabinet.html">личном кабинете</a>.</p>
+        </div>
+        
+        <a href="catalog.html" class="btn">Вернуться в каталог</a>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const orderNumber = urlParams.get('order');
+            
+            if (orderNumber) {
+                document.getElementById('order-number').textContent = `Номер вашего заказа: ${orderNumber}`;
+                
+                // Очищаем корзину
+                localStorage.removeItem('cart');
+            } else {
+                window.location.href = '/';
+            }
+        });
+    </script>
+</body>
+</html>

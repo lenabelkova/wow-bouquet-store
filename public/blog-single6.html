@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ВАУ! БУКЕТ! - цветы по низким ценам с доставкой по всему Оренбургу.</title>
+    <link rel="icon" type="images/x-icon" href="images/ico.png">
+    <link rel="stylesheet" href="fonts/stylesheet.css">
+    <link rel="stylesheet" href="css/swiper-bundle.min.css">
+    <link rel="stylesheet" href="css/magnific-popup.css">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+    /* Мобильное меню - финальная версия */
+    @media (max-width: 992px) {
+        .header-bottom {
+            display: none;
+        }
+        
+        .mobile-header {
+            display: flex;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: #fff;
+            z-index: 100;
+            padding: 15px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Добавьте стили для мобильных иконок */
+        .mobile-actions-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .mobile-actions-header .cart,
+        .mobile-actions-header .account {
+            display: flex;
+        }
+
+        /* Добавляем отступ для контента, чтобы он не скрывался под шапкой */
+        body {
+            padding-top: 70px;
+        }
+
+        .s-banner {
+            margin-top: -20px; /* Компенсируем отступ для первого блока */
+        }
+    }
+
+    @media (min-width: 993px) {
+        .mobile-header,
+        .mobile-menu,
+        .menu-overlay {
+            display: none !important;
+        }
+        
+        /* Показываем иконки в обычном хедере */
+        .header-actions {
+            display: flex;
+        }
+        
+        /* Скрываем мобильные иконки на десктопе */
+        .mobile-actions-header {
+            display: none !important;
+        }
+
+        /* Убираем отступ для десктопной версии */
+        body {
+            padding-top: 0;
+        }
+    }
+    
+    .mobile-header {
+        display: none;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        background: #fff;
+        z-index: 100;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+    
+    /* Остальные стили остаются без изменений */
+    .mobile-header-inner {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+    
+    .burger-btn {
+        width: 24px;
+        height: 18px;
+        position: relative;
+        background: none;
+        border: none;
+        padding: 0;
+        cursor: pointer;
+    }
+    
+    .burger-btn span {
+        display: block;
+        width: 100%;
+        height: 2px;
+        background-color: #333;
+        position: absolute;
+        left: 0;
+        transition: all 0.3s ease;
+    }
+    
+    .burger-btn span:nth-child(1) {
+        top: 0;
+    }
+    
+    .burger-btn span:nth-child(2) {
+        top: 50%;
+        transform: translateY(-50%);
+    }
+    
+    .burger-btn span:nth-child(3) {
+        bottom: 0;
+    }
+    
+    .mobile-logo {
+        margin-right: auto;
+    }
+    
+    .mobile-actions-header {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+    
+    .mobile-menu {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 100%;
+        max-width: 320px;
+        height: 100%;
+        background: #fff;
+        z-index: 1000;
+        transition: right 0.3s ease;
+        box-sizing: border-box;
+        box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .mobile-menu.active {
+        right: 0;
+    }
+    
+    .mobile-menu-header {
+        padding: 15px 20px;
+        display: flex;
+        justify-content: flex-end;
+    }
+    
+    .close-menu {
+        background: none;
+        border: none;
+        font-size: 24px;
+        cursor: pointer;
+        padding: 5px;
+    }
+    
+    .mobile-menu-content {
+        padding: 0 20px 20px;
+        flex-grow: 1;
+        overflow-y: auto;
+    }
+    
+    .mobile-nav ul {
+        list-style: none;
+        padding: 0;
+        margin: 0 0 20px 0;
+    }
+    
+    .mobile-nav li {
+        margin-bottom: 15px;
+    }
+    
+    .mobile-nav a {
+        color: #333;
+        text-decoration: none;
+        font-size: 18px;
+        font-weight: 500;
+        display: block;
+        padding: 10px 0;
+        transition: color 0.2s;
+    }
+    
+    .mobile-nav a:hover {
+        color: #e91e63;
+    }
+    
+    .mobile-actions {
+        display: flex;
+        gap: 15px;
+        padding: 15px 0;
+        border-top: 1px solid #eee;
+        margin-top: auto;
+    }
+    
+    .mobile-search {
+        margin: 20px 0;
+    }
+    
+    .mobile-search input {
+        width: 100%;
+        padding: 10px 15px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-size: 16px;
+    }
+    
+    .menu-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 999;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+    }
+    
+    .menu-overlay.active {
+        opacity: 1;
+        visibility: visible;
+    }
+    
+    .no-scroll {
+        overflow: hidden;
+    }
+    
+    /* Стили для корзины (одинаковые для мобильной и ПК версии) */
+    .popup {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1001;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+    }
+    
+    .popup.active {
+        opacity: 1;
+        visibility: visible;
+    }
+    
+    .popup__container {
+        background-color: #fff;
+        border-radius: 10px;
+        padding: 30px;
+        max-width: 600px;
+        width: 90%;
+        max-height: 80vh;
+        overflow-y: auto;
+        position: relative;
+    }
+    
+    .popup__close {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        font-size: 24px;
+        background: none;
+        border: none;
+        cursor: pointer;
+    }
+    
+    .popup__title {
+        font-size: 24px;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+    
+    .popup__product-list {
+        margin-bottom: 20px;
+    }
+    
+    .popup__product-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 0;
+        border-bottom: 1px solid #eee;
+    }
+    
+    .popup__product-info {
+        display: flex;
+        align-items: center;
+    }
+    
+    .popup__product-image {
+        width: 60px;
+        height: 60px;
+        object-fit: cover;
+        margin-right: 15px;
+    }
+    
+    .popup__product-name {
+        font-weight: 500;
+    }
+    
+    .popup__product-price {
+        font-weight: 600;
+    }
+    
+    .popup__cost {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 10px;
+    }
+    
+    .popup__cost-title {
+        font-weight: 500;
+    }
+    
+    .popup__cost-value {
+        font-weight: 600;
+    }
+    
+    .bouquet-composition {
+        margin-top: 20px;
+        padding-top: 20px;
+        border-top: 1px solid #eee;
+    }
+    
+    .bouquet-composition h3 {
+        margin-bottom: 10px;
+    }
+    
+    .bouquet-composition ul {
+        list-style: none;
+        padding: 0;
+    }
+    
+    .bouquet-composition li {
+        margin-bottom: 5px;
+    }
+    
+    @media (max-width: 992px) {
+        .header-bottom {
+            display: none;
+        }
+        
+        .mobile-header {
+            display: flex;
+        }
+        
+        /* Скрываем иконки в обычном хедере */
+        .header-actions {
+            display: none;
+        }
+    }
+    
+    @media (min-width: 993px) {
+        .mobile-header,
+        .mobile-menu,
+        .menu-overlay {
+            display: none !important;
+        }
+        
+        /* Показываем иконки в обычном хедере */
+        .header-actions {
+            display: flex;
+        }
+    }
+    
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <!-- Мобильная шапка -->
+            <div class="mobile-header">
+                <a href="index.html" class="mobile-logo">
+                    <img src="images/logo-header.svg" alt="ВАУ! БУКЕТ!" width="120">
+                </a>
+                
+                <div class="mobile-header-inner">
+                    <!-- Переносим иконки из header-actions -->
+                    <div class="mobile-actions-header">  
+                        <a href="login.html" class="account" id="mobile-account-link">
+                            <img src="images/account.svg" alt="ВАУ! БУКЕТ!" id="mobile-account-icon">
+                        </a>
+                        <button class="cart" id="mobile-cart">
+                            <img class="cart__image" src="./images/car.svg" alt="Cart">
+                           <div class="cart__num" id="mobile-cart_num">0</div>
+                        </button>
+                    </div>
+                    
+                    <button class="burger-btn" id="burgerBtn">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Оригинальный хедер для ПК -->
+            <div class="header-bottom">
+                <div class="container">
+                    <div class="header-bottom-row">
+                        <a href="index.html" class="header-logo">
+                            <img src="images/logo-header.svg" alt="ВАУ! БУКЕТ!">
+                        </a>
+                        <nav class="menu-nav">
+                            <ul>
+                                <li><a href="index.html#a">О нас</a></li>
+                                <li><a href="index.html#b">Каталог</a></li>
+                                <li><a href="blog.html">Блог</a></li>
+                                <li><a href="contacts.html">Контакты</a></li>
+                                <li><a href="index.html#c">Отзывы</a></li>
+                            </ul>
+                        </nav>
+                        <div class="header-actions">  
+                            <a href="login.html" class="account" id="account-link">
+                                <img src="images/account.svg" alt="ВАУ! БУКЕТ!" id="account-icon">
+                            </a>
+                            <button class="cart" id="cart">
+                                <img class="cart__image" src="./images/car.svg" alt="Cart">
+                               <div class="cart__num" id="cart_num">0</div>  <!-- В десктопной версии -->
+                            </button>
+                        </div>
+
+                        <div class="search-container">
+                            <input type="text" id="search-input" placeholder="Поиск товаров...">
+                            <button id="search-button">
+                                <img src="images/lupa.png" alt="Поиск">
+                            </button>
+                            <div id="suggestions"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Мобильное меню -->
+        <div class="mobile-menu" id="mobileMenu">
+            <div class="mobile-menu-header">
+                <button class="close-menu" id="closeMenu">×</button>
+            </div>
+            
+            <div class="mobile-menu-content">
+                <nav class="mobile-nav">
+                    <ul>
+                        <li><a href="index.html#a">О нас</a></li>
+                                <li><a href="index.html#b">Каталог</a></li>
+                                <li><a href="blog.html">Блог</a></li>
+                                <li><a href="contacts.html">Контакты</a></li>
+                                <li><a href="index.html#c">Отзывы</a></li>
+                    </ul>
+                
+               
+            </div>
+        </div>
+        </nav>
+        <!-- Затемнение фона -->
+        <div class="menu-overlay" id="menuOverlay"></div>
+    </header>
+	<div class="s-breadcrumbs">
+		<div class="container">
+		</div>
+	</div>
+
+	
+	<section class="s-single">
+		<div class="container">
+
+			<div class="single-top">
+				<div class="single-thumbnail">
+					
+				</div>
+				<div class="news-top-line">
+				
+				</div>
+				<h1 class="single-title">Как сохранить свежесть срезанных цветов дольше</h1>
+			</div>
+			
+			<div class="single-content">
+				<p>Для того, чтобы вы могли видеть, откуда все это рожденное заблуждение тех, кто обвиняет удовольствие и восхваляет страдание, я раскрою все дело и объясню то самое, что было сказано этим открывателем истины и как бы архитектором истины. счастливая жизнь. Ибо никто не презирает, не ненавидит и не бежит от удовольствия не потому, что оно есть удовольствие, а потому, что великие страдания причиняют тому, кто не умеет разумно следовать за удовольствием.</p>
+				<p>Кроме того, нет никого, кто, потому что он любит боль, преследует ее, хочет ее получить, а потому, что никогда не бывает таких времен, когда он ищет большого удовольствия через труд и боль. Ибо, говоря в мельчайших подробностях, кто из нас предпринимает какие-либо физические упражнения, требующие труда, кроме как для того, чтобы извлечь из них какую-либо пользу? Но кто может справедливо критиковать того, кто хочет быть в удовольствии, которое не приносит дискомфорта, или того, кто избегает той боли, которая не приносит удовольствия?»</p>
+				<h5>Как быть?</h5>
+				<p>Но на самом деле мы и обвиняем, и низвергаем тех, кто достоин справедливой ненависти, кто смягчился лестью сиюминутных удовольствий, кто какими скорбями и какими бедами испорчен.</p>
+				<h5>Что с этим делать?</h5>
+				<p>Но на самом деле мы и обвиняем их, и справедливой ненавистью приводим тех, кто этого заслуживает, и обращаем их в бегство.
+					Тех, кто размягчен и развращен лестью сиюминутных удовольствий, тех, кто исполнен печалей.
+					Равным образом виновны и те, которые оставляют свои обязанности из-за слабости ума, то есть трудов и болей.
+					Ибо в свободное время, когда мы свободны в выборе, ничто не мешает нам ни в малейшей степени.
+					С другой стороны, мы осуждаем с праведным негодованием и неприязнью к людям, которые настолько обольщены и деморализованы прелестями сиюминутного удовольствия, настолько ослеплены желанием, что не могут предвидеть страданий и бед, которые неизбежно последуют за ними; и в равной степени виноваты те, кто не выполняет свой долг.</p>
+			</div>
+
+			<div class="single-navs">
+				<a href="blog-single5.html">
+					<svg width="48" height="28" viewBox="0 0 48 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<g clip-path="url(#clip0_204_822)">
+						<path d="M13.1646 27.1646L15.3026 25.0264L5.78827 15.5119L48 15.5119L48 12.4881L5.78827 12.4881L15.3026 2.97369L13.1646 0.835523L2.66382e-06 14.0001L13.1646 27.1646Z" fill="#302D2D"/>
+						</g>
+						<defs>
+						<clipPath id="clip0_204_822">
+						<rect width="48" height="28" fill="white" transform="translate(48 28) rotate(180)"/>
+						</clipPath>
+						</defs>
+					</svg>
+					<span>Тренды в флористике 2024 года</span>
+				</a>
+				<span class="single-navs-line"></span>
+				<a href="blog-single.html">		
+					<span>Мастер-класс по составлению букетов</span>
+					<svg width="48" height="28" viewBox="0 0 48 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<g clip-path="url(#clip0_204_827)">
+						<path d="M34.8354 0.835449L32.6974 2.97362L42.2117 12.4881L0 12.4881L0 15.5119L42.2117 15.5119L32.6974 25.0263L34.8354 27.1645L48 13.9999L34.8354 0.835449Z" fill="#302D2D"/>
+						</g>
+						<defs>
+						<clipPath id="clip0_204_827">
+						<rect width="48" height="28" fill="white"/>
+						</clipPath>
+						</defs>
+					</svg>
+				</a>
+			</div>
+
+		
+	</section>
+
+	
+	<footer class="site-footer">
+		<div class="container">
+			<div class="footer-row">
+				<div class="footer-left">
+					<a href="index.html" class="footer-logo">
+						<img src="images/logop.svg" alt="Dental Tooth">
+					</a>
+					<div class="footer-info">
+						<div class="footer-info-item">
+							<span class="footer-info-icon">
+								<img src="images/ppo.svg" alt="Локация">
+							</span>
+							<span>ул. Салмышская 67/1, город Оренбург</span>
+						</div>
+
+						<div class="footer-info-item">
+							<span class="footer-info-icon">
+								<img src="images/phone1.svg" alt="Телефон">
+							</span>
+							<span>+7 (987)  44 54 175</span>
+						</div>
+
+						<div class="footer-info-item">
+							<span class="footer-info-icon">
+								<img src="images/ee.svg" alt="Email">
+							</span>
+							<span> info@wow-buket.ru</span>
+						</div>
+						
+					</div>
+
+					<div class="footer-social">
+						<a href="https://t.me/wow_bouquet_oren">
+							<img src="images/wk.svg" alt="Twitter">
+						</a>
+						<a href="https://api.whatsapp.com/send/?phone=79018914123&text&type=phone_number&app_absent=0">
+							<img src="images/wh.svg" alt="Instagram">
+						</a>
+						<a href="https://vk.com/wow_bouquet_oren">
+							<img src="images/vk1.svg" alt="Vk">
+						</a>
+					</div>
+				</div>
+
+				<div class="footer-right">
+
+					<div class="footer-menu">
+						<div class="footer-title">Каталог</div>
+						<ul>
+							<li><a href="br.html">Букеты из роз</a></li>
+							<li><a href="bt.html">Букеты из тюлпанов</a></li>
+							<li><a href="bp.html">Букеты из пионов</a></li>
+							<li><a href="bpp.html">Букеты полевые</a></li>
+							<li><a href="bx.html">Букеты из хризонтемы</a></li>
+							<li><a href="bk.html">Цветы в корзинах</a></li>
+							<li><a href="bpp.html">Букеты из сухоцветов</a></li>
+							<li><a href="bp.html">Букеты невесты</a></li>
+							
+						</ul>
+					</div>
+
+					<div class="footer-menu">
+						<div class="footer-title">Блог</div>
+						<ul>
+							<li><a href="blog-single.html">Мастер-класс по составлению букетов</a></li>
+							<li><a href="blog-single2.html">Конкурс на лучшее фото с цветами</a></li>
+							<li><a href="blog-single3.html">Секреты ухода за комнатными растениями</a></li>
+							<li><a href="blog-single4.html">Символика цветов: что означают разные виды</a></li>
+						</ul>
+					</div>
+
+					<div class="footer-menu">
+						<div class="footer-title">Часы работы</div>
+						<ul>
+							<li>Пн: 8:30 - 19:00</li>
+							<li>Вт: 8:00 - 19:00</li>
+							<li>Ср: 8:00 - 19:00</li>
+							<li>Чт: 8:30 - 19:00</li>
+							<li>Пт: 10:00 - 16:00</li>
+							<li>Сб: выходной</li>
+							<li>Вс: выходной</li>
+						</ul>
+					</div>
+
+				</div>
+			</div>
+		</div>
+
+		<div class="footer-copyright">
+			<div class="container">
+				<div>
+					2024 © ВАУ БУКЕТ! Все права защищены
+				</div>
+			</div>
+		</div>
+		
+		
+	</footer>
+	<div class="popup" id="cartPopup">
+    <div class="popup__container" id="popup_container">
+        <div class="popup__item">
+            <h1 class="popup__title">Ваша корзина</h1>
+        </div>
+
+        <div class="popup__item" id="popup_product_list">
+            <!-- Товары будут добавляться сюда -->
+        </div>
+
+        <div class="popup__item">
+            <div class="popup__cost">
+                <h2 class="popup__cost-title">Итого</h2>
+                <output class="popup__cost-value" id="popup_cost">0 руб</output>
+            </div>
+
+            <div class="popup__cost">
+                <h2 class="popup__cost-title">Скидка</h2>
+                <output class="popup__cost-value" id="popup_discount">0 руб</output>
+            </div>
+
+            <div class="popup__cost">
+                <h2 class="popup__cost-title">Итого со скидкой</h2>
+                <output class="popup__cost-value" id="popup_cost_discount">0 руб</output>
+            </div>
+
+            <div id="bouquet_composition" class="bouquet-composition">
+                <!-- Состав букета будет добавляться сюда -->
+            </div>
+
+     
+        </div>
+
+        <button class="popup__close" id="popup_close">&#10006;</button>
+    </div>
+</div>
+	  
+	  <script src="./scripts/main.js"></script>
+
+
+<script src="js/jquery-3.6.4.min.js"></script>
+<script src="js/swiper-bundle.min.js"></script>
+<script src="js/jquery.magnific-popup.min.js"></script>
+<script src="js/script.js"></script>
+</body>
+
+</html>
+
+
+
