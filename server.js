@@ -12,11 +12,11 @@ const fs = require('fs');
 // Настройка подключения к базе данных
 const sequelize = new Sequelize({
   dialect: 'postgres',
-  host: 'localhost',
-  port: 3000,
-  username: 'postgres',
-  password: '2005',
-  database: 'wow bouquet store'
+  host: '172.17.0.1',
+  port: 5432,
+  username: 'wow',
+  password: '00001111',
+  database: 'wow'
 });
 
 // Модель пользователя
@@ -386,10 +386,10 @@ const upload = multer({
 
 // Инициализация Express
 const app = express();
-const PORT = 3005;
+const PORT = 3004;
 
 // Middleware
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, './public')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 

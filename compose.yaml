@@ -1,0 +1,13 @@
+services:
+  app:
+    container_name: wow_app_container 
+    build: .
+    ports:
+      - "53007:3004"
+    restart: unless-stopped
+    volumes:
+      - ./uploads:/app/uploads
+    working_dir: /app
+
+
+
